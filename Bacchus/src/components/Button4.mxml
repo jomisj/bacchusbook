@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Skin xmlns:s="library://ns.adobe.com/flex/spark" xmlns:fx="http://ns.adobe.com/mxml/2009">
+	<fx:Metadata>[HostComponent("spark.components.Button")]</fx:Metadata>
+	<s:states>
+		<s:State name="up"/>
+		<s:State name="over"/>
+		<s:State name="down"/>
+		<s:State name="disabled"/>
+	</s:states>
+	<s:Ellipse height="93" width="93" x="0.5" y="0.5">
+		<s:stroke>
+			<s:SolidColorStroke caps="none" color="#5380D0" joints="miter" miterLimit="4" weight="1"/>
+		</s:stroke>
+		<s:fill>
+			<s:SolidColor color="#5380D0" color.over="#4D81DB"/>
+		</s:fill>
+		<s:filters>
+			<s:DropShadowFilter includeIn="up" blurX="4.0" hideObject="false" blurY="4.0" distance="4.0" color="0x000000" inner="false" strength="1" alpha="0.5" quality="2" knockout="false" angle="45.0"/>
+			<s:DropShadowFilter includeIn="over" blurX="4.0" hideObject="false" blurY="4.0" distance="4.0" color="0x000000" inner="false" strength="1" alpha="0.5" quality="2" knockout="false" angle="45.0"/>
+		</s:filters>
+	</s:Ellipse>
+</s:Skin>

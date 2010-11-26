@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					   xmlns:s="library://ns.adobe.com/flex/spark" 
+					   xmlns:d="http://ns.adobe.com/fxg/2008/dt" 
+					   xmlns:fc="http://ns.adobe.com/flashcatalyst/2009" 
+					   backgroundColor="#FFFFFF" height="768" 
+					   preloaderChromeColor="#FFFFFF" width="1024" 
+					   currentState="Page1"
+					   xmlns:mx="library://ns.adobe.com/flex/mx"
+					   creationComplete="windowedapplication1_creationCompleteHandler(event)" >
+	<fx:Style source="Main.css"/>
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.events.FlexEvent;
+			import mx.rpc.events.FaultEvent;
+			include "WineFunc.as";
+			private function handleFault(event:FaultEvent):void{
+				Alert.show(event.fault.faultString, "Error");
+			}
+			
+			protected function button1_clickHandler(event:MouseEvent):void
+			{
+				currentState='Page2';
+			}
+			
+			
+			protected function button2_clickHandler(event:MouseEvent):void
+			{
+				currentState='Page1';
+			}
+						
+			protected function windowedapplication1_creationCompleteHandler(event:FlexEvent):void
+			{
+				chartByYear();
+			}
+						
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<mx:HTTPService 
+			id="wineService"
+			url="http://localhost:8888/wines.php"
+			resultFormat="e4x" fault="handleFault(event)"
+			useProxy="false"/>
+		<s:HTTPService
+			id="WineServiceChart"
+			url="http://localhost:8888/wines.php"
+			resultFormat="e4x" fault="handleFault(event)"
+			useProxy="false"/>
+		<mx:SeriesInterpolate id="interpolate" duration="500"/>
+	</fx:Declarations>
+	
+	<s:states>
+		<s:State name="Page1"/>
+		<s:State name="Page2"/>
+		<s:State name="Page3"/>
+	</s:states>
+	<s:Panel includeIn="Page2" x="147" y="102" width="730" height="606">
+		<mx:DataGrid id="dg" x="10.2" y="84.1" width="710" height="331" dataProvider="{listData}" fontSize="12">
+			<mx:columns>
+				<mx:DataGridColumn dataField="wineID" headerText="WineID" visible="false"/>
+				<mx:DataGridColumn dataField="wine_name" headerText="Wine Name"/>
+				<mx:DataGridColumn dataField="region" headerText="Region"/>
+				<mx:DataGridColumn dataField="grape_type" headerText="Grape"/>
+				<mx:DataGridColumn dataField="color" headerText="Color"/>
+				<mx:DataGridColumn dataField="year" headerText="Year"/>
+			</mx:columns>
+		</mx:DataGrid>
+		<s:BorderContainer x="10" y="422" width="710" height="141">
+			<s:Label x="10" y="15" text="Wine Name" fontSize="12"/>
+			<s:Label x="34" y="35" text="Region" fontSize="12"/>
+			<s:Label x="10" y="55" text="Grape Type" fontSize="12"/>
+			<s:Label x="48" y="75" text="Year" fontSize="12"/>
+			<s:Label x="16" y="95" text="Appelation" fontSize="12"/>
+			<s:Label x="2" y="115" text="Classification" fontSize="12"/>
+			<s:Label x="284" y="15" text="Color" fontSize="12" height="13"/>
+			<s:Label x="285" y="35" text="Price" fontSize="12" height="13"/>
+			<s:Label x="270" y="55" text="Grading" fontSize="12" height="13"/>
+			<s:Label x="255" y="75" text="Bottle Size" fontSize="12" height="13"/>
+			<s:Label x="233" y="95" text="Purchase Date" fontSize="12" height="13"/>
+			<s:Label x="236" y="115" text="Removal Date" fontSize="12" height="13"/>
+			<s:Label x="495" y="15" text="Drink Start" fontSize="12" height="12"/>
+			<s:Label x="499" y="35" text="Drink End" fontSize="12" height="12"/>
+			<s:Label x="499" y="55" text="Best Start" fontSize="12" height="12"/>
+			<s:Label x="503" y="75" text="Best End" fontSize="12" height="12"/>
+			<s:Label x="521" y="95" text="Event" fontSize="12" height="12"/>
+			<s:Label x="499" y="115" text="Comment" fontSize="12" height="12"/>
+			<s:TextInput x="77" y="10" width="140" fontSize="12" text="{dg.selectedItem.wine_name}"/>
+			<s:TextInput x="77" y="30" width="140" fontSize="12" text="{dg.selectedItem.region}"/>
+			<s:TextInput x="77" y="50" width="140" fontSize="12" text="{dg.selectedItem.grape_type}"/>
+			<s:TextInput x="77" y="70" width="140" fontSize="12" text="{dg.selectedItem.year}"/>
+			<s:TextInput x="77" y="90" width="140" fontSize="12" text="{dg.selectedItem.apelation}"/>
+			<s:TextInput x="77" y="110" width="140" fontSize="12" text="{dg.selectedItem.classification}"/>
+			<s:TextInput x="322" y="110" width="140" fontSize="12" text="{dg.selectedItem.removal_date}"/>
+			<s:TextInput x="322" y="90" width="140" fontSize="12" text="{dg.selectedItem.purchase_date}"/>
+			<s:TextInput x="322" y="70" width="140" fontSize="12" text="{dg.selectedItem.bottle_size}"/>
+			<s:TextInput x="322" y="49" width="140" fontSize="12" text="{dg.selectedItem.grading}"/>
+			<s:TextInput x="322" y="28" width="140" fontSize="12" text="{dg.selectedItem.price}"/>
+			<s:TextInput x="322" y="8" width="140" fontSize="12" text="{dg.selectedItem.color}"/>
+			<s:TextInput x="564" y="10" width="140" fontSize="12" text="{dg.selectedItem.drink_start}"/>
+			<s:TextInput x="564" y="30" width="140" fontSize="12" text="{dg.selectedItem.drink_end}"/>
+			<s:TextInput x="564" y="50" width="140" fontSize="12" text="{dg.selectedItem.best_start}"/>
+			<s:TextInput x="564" y="70" width="140" fontSize="12" text="{dg.selectedItem.best_end}"/>
+			<s:TextInput x="564" y="90" width="140" fontSize="12" text="{dg.selectedItem.eventID}"/>
+			<s:TextInput x="564" y="110" width="140" fontSize="12" text="{dg.selectedItem.comments}"/>
+		</s:BorderContainer>
+	</s:Panel>
+	<fx:DesignLayer d:userLabel="Layer 1">
+		<s:Ellipse alpha="0.24" height="219" width="731" x="30.5" y="-125.5" x.Page2="147" y.Page2="-125.5" x.Page1="147" x.Page3="147" width.Page2="730" width.Page3="730" width.Page1="730">
+			<s:stroke>
+				<s:SolidColorStroke caps="none" color="#5380D0" joints="miter" miterLimit="4" weight="1"/>
+			</s:stroke>
+			<s:fill>
+				<s:SolidColor color="#5380D0"/>
+			</s:fill>
+		</s:Ellipse>
+		<s:Button skinClass="components.Button6" x="192" y="4" click.Page1="fill2()" click.Page2="chartByYear();currentState='Page1'" x.Page2="312" y.Page2="4" x.Page1="312" x.Page3="312"/>
+		<s:Button skinClass="components.Button7" x="278" y="4" x.Page2="398" y.Page2="4" x.Page1="398" x.Page3="398"/>
+	</fx:DesignLayer>
+	<s:Panel includeIn="Page2" x="884" y="101" width="130" height="607">
+	</s:Panel>
+	<s:Panel includeIn="Page2" x="10" y="101" width="130" height="607">
+		<mx:Accordion x="0" y="-32" width="128" height="606">
+			<s:NavigatorContent label="Accordion Pane 1" width="100%" height="100%">
+			</s:NavigatorContent>
+		</mx:Accordion>
+	</s:Panel>
+	<s:BorderContainer includeIn="Page1" x="312" y="252" width="429" height="351">
+		<mx:PieChart x="107" y="25" id="piechart1" width="247" height="238" itemClick="piechart1_itemClickHandler(event)" dataProvider="{listData}" showDataTips="true">
+			<mx:series>
+				<mx:PieSeries displayName="Series 1" field="Num" nameField="year" showDataEffect="interpolate"/>
+			</mx:series>
+		</mx:PieChart>
+		<mx:Legend dataProvider="{piechart1}"/>
+	</s:BorderContainer>
+</s:WindowedApplication>
