@@ -20,7 +20,9 @@ import mx.rpc.events.ResultEvent;
 
 private var params:Object = new Object();
 [Bindable]
-private var listData:XMLListCollection;
+private var listData:XMLListCollection; 
+[Bindable]
+private var dd1Data:XMLListCollection;
 
 public function resultHandler(event:ResultEvent):void {
 	var result:XML = XML(event.result);  

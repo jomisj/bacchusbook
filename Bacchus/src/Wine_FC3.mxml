@@ -14,6 +14,9 @@
 			import mx.collections.ArrayCollection;
 			import mx.events.FlexEvent;
 			import mx.rpc.events.FaultEvent;
+			
+			import spark.events.DropDownEvent;
+			import spark.events.IndexChangeEvent;
 			include "WineFunc.as";
 			private function handleFault(event:FaultEvent):void{
 				Alert.show(event.fault.faultString, "Error");
@@ -33,8 +36,23 @@
 			protected function windowedapplication1_creationCompleteHandler(event:FlexEvent):void
 			{
 				chartByYear();
+				dd1Data=new XMLListCollection(myChartTypes);
+				this.dd1.selectedIndex=0;
 			}
-						
+
+			protected function dd1_changeHandler(event:IndexChangeEvent):void
+			{
+				var chartTypeStr:String;
+				chartTypeStr = event.target.selectedItem.@label;
+				if(chartTypeStr == "Pie"){
+					vs1.selectedIndex = 0;
+				}
+				if(chartTypeStr == "Line"){
+					listData.refresh();
+					vs1.selectedIndex = 1;
+				}
+			}
+
 		]]>
 	</fx:Script>
 	<fx:Declarations>
@@ -48,7 +66,21 @@
 			url="http://localhost:8888/wines/wines.php"
 			resultFormat="e4x" fault="handleFault(event)"
 			useProxy="false"/>
-		<mx:SeriesInterpolate id="interpolate" duration="500"/>
+		<mx:SeriesInterpolate id="interpolate" duration="500"/> 
+		<mx:SeriesSlide id="sslide" duration="500"/>
+		<fx:XMLList id="myChartTypes"
+					xmlns="">
+			<chType label="Pie">
+				<menuitem label="Number of Bottles"/>
+				<menuitem label="Number of Distinct Wine Types"/>
+			</chType>
+			<chType label="Line">
+				<menuitem label="Category 2 : 1"/>
+				<menuitem label="Category 2 : 2"/>
+				<menuitem label="Category 2 : 3"/>
+			</chType>
+			
+		</fx:XMLList>
 	</fx:Declarations>
 	
 	<s:states>
@@ -126,12 +158,28 @@
 			</s:NavigatorContent>
 		</mx:Accordion>
 	</s:Panel>
-	<s:BorderContainer includeIn="Page1" x="312" y="252" width="429" height="351">
-		<mx:PieChart x="107" y="25" id="piechart1" width="247" height="238" itemClick="piechart1_itemClickHandler(event)" dataProvider="{listData}" showDataTips="true">
-			<mx:series>
-				<mx:PieSeries displayName="Series 1" field="Num" nameField="year" showDataEffect="interpolate"/>
-			</mx:series>
-		</mx:PieChart>
-		<mx:Legend dataProvider="{piechart1}"/>
-	</s:BorderContainer>
+	<mx:ViewStack id="vs1" includeIn="Page1" x="307.1" y="209.8" width="400" height="400">
+		<s:NavigatorContent label="View1" width="100%" height="100%">
+			<mx:PieChart x="110" y="0" id="piechart1" width="290" height="290" itemClick="piechart1_itemClickHandler(event)" dataProvider="{listData}" showDataTips="true">
+				<mx:series>
+					<mx:PieSeries id="piechart1S1" displayName="Series 1" field="Num" nameField="year" showDataEffect="interpolate"/>
+				</mx:series>
+			</mx:PieChart>
+			<mx:Legend dataProvider="{piechart1}" width="110" height="290" x="0" y="0"/>
+		</s:NavigatorContent>
+		<s:NavigatorContent label="View2" width="100%" height="100%">
+			<mx:LineChart x="0" y="0" id="linechart1" itemClick="piechart1_itemClickHandler(event)" dataProvider="{listData}" showDataTips="true">
+				<mx:series>
+					<mx:LineSeries displayName="year" xField="year" yField="Num" showDataEffect="sslide"/>
+				</mx:series>
+			</mx:LineChart>
+		</s:NavigatorContent>
+	</mx:ViewStack>
+	<s:Label includeIn="Page1" x="175" y="166" text="Chart Type:" fontSize="12" height="21" verticalAlign="middle"/>
+	<s:DropDownList id="dd1" includeIn="Page1" x="245" y="166" dataProvider="{dd1Data}" labelField="@label" fontSize="12" change="dd1_changeHandler(event)"></s:DropDownList>
+	<s:Label includeIn="Page1" x="405" y="166" text="Category 1:" fontSize="12" height="21" verticalAlign="middle"/>
+	<s:DropDownList includeIn="Page1" x="475" y="166"></s:DropDownList>
+	<s:Label includeIn="Page1" x="635" y="166" text="Category 2:" fontSize="12" height="21" verticalAlign="middle"/>
+	<s:DropDownList includeIn="Page1" x="705" y="166"></s:DropDownList>
+	
 </s:WindowedApplication>
