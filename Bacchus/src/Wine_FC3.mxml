@@ -3,8 +3,8 @@
 					   xmlns:s="library://ns.adobe.com/flex/spark" 
 					   xmlns:d="http://ns.adobe.com/fxg/2008/dt" 
 					   xmlns:fc="http://ns.adobe.com/flashcatalyst/2009" 
-					   backgroundColor="#FFFFFF" height="768" 
-					   preloaderChromeColor="#FFFFFF" width="1024" 
+					   backgroundColor="#FFFFFF" height="800" 
+					   preloaderChromeColor="#FFFFFF" width="1280" 
 					   currentState="Page1"
 					   xmlns:mx="library://ns.adobe.com/flex/mx"
 					   creationComplete="windowedapplication1_creationCompleteHandler(event)" >
@@ -13,6 +13,7 @@
 		<![CDATA[
 			import mx.collections.ArrayCollection;
 			import mx.events.FlexEvent;
+			import mx.events.ListEvent;
 			import mx.rpc.events.FaultEvent;
 			
 			import spark.events.DropDownEvent;
@@ -20,12 +21,6 @@
 			include "WineFunc.as";
 			private function handleFault(event:FaultEvent):void{
 				Alert.show(event.fault.faultString, "Error");
-			}
-			
-			
-			protected function button2_clickHandler(event:MouseEvent):void
-			{
-				currentState='Page1';
 			}
 			
 			protected function windowedapplication1_creationCompleteHandler(event:FlexEvent):void
@@ -48,6 +43,24 @@
 				}
 			}
 			
+
+			protected function remove_button_clickHandler(event:MouseEvent):void
+			{
+				
+			}
+
+
+			protected function edit_button_clickHandler(event:MouseEvent):void
+			{
+				currentState="Page2_editable";
+			}
+
+
+			protected function dg_itemClickHandler(event:ListEvent):void
+			{
+				currentState="Page2";
+			}
+
 		]]>
 	</fx:Script>
 	<fx:Declarations>
@@ -82,14 +95,15 @@
 		<s:State name="Page1"/>
 		<s:State name="Page2"/>
 		<s:State name="Page3"/>
+		<s:State name="Page2_editable"/>
 	</s:states>
-	<s:Panel includeIn="Page2" x="147" y="102" width="730" height="606">
+	<s:Panel includeIn="Page2,Page2_editable" x="147" y="102" width="730" height="606">
 		<s:SkinnableContainer x="10" y="10" width="708" height="553" >
 			<s:layout>
-				<s:VerticalLayout gap="5" /> 
+				<s:VerticalLayout gap="15" /> 
 			</s:layout>
 			
-			<mx:DataGrid id="dg" y="11.1" width="708" height="289" dataProvider="{listData}" fontSize="12" x="10.2" editable="false" variableRowHeight="true">
+			<mx:DataGrid id="dg" y="11.1" width="708" height="289" dataProvider="{listData}" fontSize="12" x="10.2" editable="false" variableRowHeight="true" itemClick.Page2_editable="dg_itemClickHandler(event)">
 				<mx:columns>
 					<mx:DataGridColumn dataField="wineID" headerText="WineID" visible="false"/>
 					<mx:DataGridColumn dataField="color" headerText="Color" width="100" wordWrap="true"/>
@@ -106,9 +120,10 @@
 					<s:layout>
 						<s:TileLayout orientation="rows"/>
 					</s:layout>
-					<s:Button label="Button"/>
-					<s:Button label="Button"/>
-					<s:Button label="Button"/>
+					<s:Button id="remove_button" label="Remove" click="remove_button_clickHandler(event)"/>
+					<s:Button id="edit_button" label="Edit" click="edit_button_clickHandler(event)"/>
+					<s:Button id="addAnother_button" label="Add Another"/>
+					<s:Button id="printLabel_button" label="Print Label"/>
 				</s:SkinnableContainer>
 				
 				
@@ -125,14 +140,14 @@
 						<s:Label text="Appelation" fontSize="12"/>
 						<s:Label text="Classification" fontSize="12"/>
 					</s:SkinnableContainer>
-					<s:SkinnableContainer skinClass="mySkins.Fields" width="140">
-						<s:TextInput fontSize="12" text="{dg.selectedItem.wine_name}"/>
-						<s:TextInput fontSize="12" text="{dg.selectedItem.region}" />
-						<s:TextInput fontSize="12" text="{dg.selectedItem.color}"/>
-						<s:TextInput fontSize="12" text="{dg.selectedItem.year}"/>
-						<s:TextInput fontSize="12" text="{dg.selectedItem.grape_type}"/>
-						<s:TextInput fontSize="12" text="{dg.selectedItem.apelation}"/>
-						<s:TextInput fontSize="12" text="{dg.selectedItem.classification}"/>				
+					<s:SkinnableContainer skinClass="mySkins.Fields" width="140" >
+						<s:TextInput fontSize="12" text="{dg.selectedItem.wine_name}" borderVisible="false" editable="false" contentBackgroundAlpha.Page2="0" borderVisible.Page2_editable="true" editable.Page2_editable="true"/>
+						<s:TextInput fontSize="12" text="{dg.selectedItem.region}"  borderVisible="false" editable="false" contentBackgroundAlpha.Page2="0" borderVisible.Page2_editable="true" editable.Page2_editable="true"/>
+						<s:TextInput fontSize="12" text="{dg.selectedItem.color}" borderVisible="false" editable="false" contentBackgroundAlpha.Page2="0" borderVisible.Page2_editable="true" editable.Page2_editable="true"/>
+						<s:TextInput fontSize="12" text="{dg.selectedItem.year}" borderVisible="false" editable="false" contentBackgroundAlpha.Page2="0" borderVisible.Page2_editable="true" editable.Page2_editable="true"/>
+						<s:TextInput fontSize="12" text="{dg.selectedItem.grape_type}" borderVisible="false" editable="false" contentBackgroundAlpha.Page2="0" borderVisible.Page2_editable="true" editable.Page2_editable="true"/>
+						<s:TextInput fontSize="12" text="{dg.selectedItem.apelation}" borderVisible="false" editable="false" contentBackgroundAlpha.Page2="0" borderVisible.Page2_editable="true" editable.Page2_editable="true"/>
+						<s:TextInput fontSize="12" text="{dg.selectedItem.classification}" borderVisible="false" editable="false" contentBackgroundAlpha.Page2="0" borderVisible.Page2_editable="true" editable.Page2_editable="true"/>				
 					</s:SkinnableContainer>
 					
 					<s:SkinnableContainer skinClass="mySkins.Labels">
@@ -143,11 +158,11 @@
 						<s:Label text="Removal Date" fontSize="12" height="13"/>
 					</s:SkinnableContainer>
 					<s:SkinnableContainer skinClass="mySkins.Fields" width="140">
-						<s:TextInput fontSize="12" text="{dg.selectedItem.removal_date}"/>
-						<s:TextInput fontSize="12" text="{dg.selectedItem.purchase_date}"/>
-						<s:TextInput fontSize="12" text="{dg.selectedItem.bottle_size}"/>
-						<s:TextInput fontSize="12" text="{dg.selectedItem.grading}"/>
-						<s:TextInput fontSize="12" text="{dg.selectedItem.price}"/>
+						<s:TextInput fontSize="12" text="{dg.selectedItem.price}" editable="false" borderVisible="false" contentBackgroundAlpha.Page2="0" borderVisible.Page2_editable="true" editable.Page2_editable="true"/>
+						<s:TextInput fontSize="12" text="{dg.selectedItem.grading}" editable="false" borderVisible="false" contentBackgroundAlpha.Page2="0" borderVisible.Page2_editable="true" editable.Page2_editable="true"/>
+						<s:TextInput fontSize="12" text="{dg.selectedItem.bottle_size}" editable="false" borderVisible="false" contentBackgroundAlpha.Page2="0" borderVisible.Page2_editable="true" editable.Page2_editable="true"/>
+						<s:TextInput fontSize="12" text="{dg.selectedItem.purchase_date}" editable="false" borderVisible="false" contentBackgroundAlpha.Page2="0" borderVisible.Page2_editable="true" editable.Page2_editable="true"/>
+						<s:TextInput fontSize="12" text="{dg.selectedItem.removal_date}" editable="false" borderVisible="false" contentBackgroundAlpha.Page2="0" borderVisible.Page2_editable="true" editable.Page2_editable="true"/>
 					</s:SkinnableContainer>
 					<s:SkinnableContainer skinClass="mySkins.Labels">
 						<s:Label text="Drink Start" fontSize="12" height="12"/>
@@ -159,12 +174,12 @@
 					</s:SkinnableContainer>
 					
 					<s:SkinnableContainer skinClass="mySkins.Fields" width="140">
-						<s:TextInput fontSize="12" text="{dg.selectedItem.drink_start}"/>
-						<s:TextInput fontSize="12" text="{dg.selectedItem.drink_end}"/>
-						<s:TextInput fontSize="12" text="{dg.selectedItem.best_start}"/>
-						<s:TextInput fontSize="12" text="{dg.selectedItem.best_end}"/>
-						<s:TextInput fontSize="12" text="{dg.selectedItem.eventID}"/>
-						<s:TextInput fontSize="12" text="{dg.selectedItem.comments}"/>					
+						<s:TextInput fontSize="12" text="{dg.selectedItem.drink_start}" editable="false" borderVisible="false" contentBackgroundAlpha.Page2="0" borderVisible.Page2_editable="true" editable.Page2_editable="true"/>
+						<s:TextInput fontSize="12" text="{dg.selectedItem.drink_end}" editable="false" borderVisible="false" contentBackgroundAlpha.Page2="0" borderVisible.Page2_editable="true" editable.Page2_editable="true"/>
+						<s:TextInput fontSize="12" text="{dg.selectedItem.best_start}" editable="false" borderVisible="false" contentBackgroundAlpha.Page2="0" borderVisible.Page2_editable="true" editable.Page2_editable="true"/>
+						<s:TextInput fontSize="12" text="{dg.selectedItem.best_end}" editable="false" borderVisible="false" contentBackgroundAlpha.Page2="0" borderVisible.Page2_editable="true" editable.Page2_editable="true"/>
+						<s:TextInput fontSize="12" text="{dg.selectedItem.eventID}" editable="false" borderVisible="false" contentBackgroundAlpha.Page2="0" borderVisible.Page2_editable="true" editable.Page2_editable="true"/>
+						<s:TextInput fontSize="12" text="{dg.selectedItem.comments}" editable="false" borderVisible="false" contentBackgroundAlpha.Page2="0" borderVisible.Page2_editable="true" editable.Page2_editable="true"/>					
 					</s:SkinnableContainer>
 					
 
@@ -178,7 +193,7 @@
 	</s:Panel>
 	
 	<fx:DesignLayer d:userLabel="Layer 1">
-		<s:Ellipse alpha="0.24" height="219" width="731" x="30.5" y="-125.5" x.Page2="147" y.Page2="-125.5" x.Page1="147" x.Page3="147" width.Page2="730" width.Page3="730" width.Page1="730">
+		<s:Ellipse alpha="0.24" height="219" y="-125.5" x="147" width="730" >
 			<s:stroke>
 				<s:SolidColorStroke caps="none" color="#5380D0" joints="miter" miterLimit="4" weight="1"/>
 			</s:stroke>
@@ -186,12 +201,12 @@
 				<s:SolidColor color="#5380D0"/>
 			</s:fill>
 		</s:Ellipse>
-		<s:Button skinClass="components.Button6" x="192" y="4" click.Page1="fill2()" click.Page2="chartByYear();currentState='Page1'" x.Page2="312" y.Page2="4" x.Page1="312" x.Page3="312"/>
-		<s:Button skinClass="components.Button7" x="278" y="4" x.Page2="398" y.Page2="4" x.Page1="398" x.Page3="398"/>
+		<s:Button skinClass="components.Button6" click.Page1="fill2()" click.Page2="chartByYear();currentState='Page1'" x="312" y="4" includeIn="Page1,Page2,Page2_editable,Page3"/>
+		<s:Button skinClass="components.Button7" y="4" x.Page2="398" y.Page2="4" x.Page1="398" x.Page3="398" x.Page2_editable="398" y.Page2_editable="4"/>
 	</fx:DesignLayer>
-	<s:Panel includeIn="Page2" x="884" y="101" width="130" height="607">
+	<s:Panel includeIn="Page2,Page2_editable" x="884" y="101" width="130" height="607">
 	</s:Panel>
-	<s:Panel includeIn="Page2" x="10" y="101" width="130" height="607">
+	<s:Panel includeIn="Page2,Page2_editable" x="10" y="101" width="130" height="607">
 		<mx:Accordion x="0" y="-32" width="128" height="606">
 			<s:NavigatorContent label="Accordion Pane 1" width="100%" height="100%">
 			</s:NavigatorContent>
