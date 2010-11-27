@@ -22,24 +22,19 @@
 				Alert.show(event.fault.faultString, "Error");
 			}
 			
-			protected function button1_clickHandler(event:MouseEvent):void
-			{
-				currentState='Page2';
-			}
-			
 			
 			protected function button2_clickHandler(event:MouseEvent):void
 			{
 				currentState='Page1';
 			}
-						
+			
 			protected function windowedapplication1_creationCompleteHandler(event:FlexEvent):void
 			{
 				chartByYear();
 				dd1Data=new XMLListCollection(myChartTypes);
 				this.dd1.selectedIndex=0;
 			}
-
+			
 			protected function dd1_changeHandler(event:IndexChangeEvent):void
 			{
 				var chartTypeStr:String;
@@ -52,18 +47,18 @@
 					vs1.selectedIndex = 1;
 				}
 			}
-
+			
 		]]>
 	</fx:Script>
 	<fx:Declarations>
 		<mx:HTTPService 
 			id="wineService"
-			url="http://localhost:8888/wines/wines.php"
+			url="http://localhost:8888/wines.php"
 			resultFormat="e4x" fault="handleFault(event)"
 			useProxy="false"/>
 		<s:HTTPService
 			id="WineServiceChart"
-			url="http://localhost:8888/wines/wines.php"
+			url="http://localhost:8888/wines.php"
 			resultFormat="e4x" fault="handleFault(event)"
 			useProxy="false"/>
 		<mx:SeriesInterpolate id="interpolate" duration="500"/> 
@@ -89,55 +84,99 @@
 		<s:State name="Page3"/>
 	</s:states>
 	<s:Panel includeIn="Page2" x="147" y="102" width="730" height="606">
-		<mx:DataGrid id="dg" x="10.2" y="84.1" width="710" height="331" dataProvider="{listData}" fontSize="12">
-			<mx:columns>
-				<mx:DataGridColumn dataField="wineID" headerText="WineID" visible="false"/>
-				<mx:DataGridColumn dataField="wine_name" headerText="Wine Name"/>
-				<mx:DataGridColumn dataField="region" headerText="Region"/>
-				<mx:DataGridColumn dataField="grape_type" headerText="Grape"/>
-				<mx:DataGridColumn dataField="color" headerText="Color"/>
-				<mx:DataGridColumn dataField="year" headerText="Year"/>
-			</mx:columns>
-		</mx:DataGrid>
-		<s:BorderContainer x="10" y="422" width="710" height="141">
-			<s:Label x="10" y="15" text="Wine Name" fontSize="12"/>
-			<s:Label x="34" y="35" text="Region" fontSize="12"/>
-			<s:Label x="10" y="55" text="Grape Type" fontSize="12"/>
-			<s:Label x="48" y="75" text="Year" fontSize="12"/>
-			<s:Label x="16" y="95" text="Appelation" fontSize="12"/>
-			<s:Label x="2" y="115" text="Classification" fontSize="12"/>
-			<s:Label x="284" y="15" text="Color" fontSize="12" height="13"/>
-			<s:Label x="285" y="35" text="Price" fontSize="12" height="13"/>
-			<s:Label x="270" y="55" text="Grading" fontSize="12" height="13"/>
-			<s:Label x="255" y="75" text="Bottle Size" fontSize="12" height="13"/>
-			<s:Label x="233" y="95" text="Purchase Date" fontSize="12" height="13"/>
-			<s:Label x="236" y="115" text="Removal Date" fontSize="12" height="13"/>
-			<s:Label x="495" y="15" text="Drink Start" fontSize="12" height="12"/>
-			<s:Label x="499" y="35" text="Drink End" fontSize="12" height="12"/>
-			<s:Label x="499" y="55" text="Best Start" fontSize="12" height="12"/>
-			<s:Label x="503" y="75" text="Best End" fontSize="12" height="12"/>
-			<s:Label x="521" y="95" text="Event" fontSize="12" height="12"/>
-			<s:Label x="499" y="115" text="Comment" fontSize="12" height="12"/>
-			<s:TextInput x="77" y="10" width="140" fontSize="12" text="{dg.selectedItem.wine_name}"/>
-			<s:TextInput x="77" y="30" width="140" fontSize="12" text="{dg.selectedItem.region}"/>
-			<s:TextInput x="77" y="50" width="140" fontSize="12" text="{dg.selectedItem.grape_type}"/>
-			<s:TextInput x="77" y="70" width="140" fontSize="12" text="{dg.selectedItem.year}"/>
-			<s:TextInput x="77" y="90" width="140" fontSize="12" text="{dg.selectedItem.apelation}"/>
-			<s:TextInput x="77" y="110" width="140" fontSize="12" text="{dg.selectedItem.classification}"/>
-			<s:TextInput x="322" y="110" width="140" fontSize="12" text="{dg.selectedItem.removal_date}"/>
-			<s:TextInput x="322" y="90" width="140" fontSize="12" text="{dg.selectedItem.purchase_date}"/>
-			<s:TextInput x="322" y="70" width="140" fontSize="12" text="{dg.selectedItem.bottle_size}"/>
-			<s:TextInput x="322" y="49" width="140" fontSize="12" text="{dg.selectedItem.grading}"/>
-			<s:TextInput x="322" y="28" width="140" fontSize="12" text="{dg.selectedItem.price}"/>
-			<s:TextInput x="322" y="8" width="140" fontSize="12" text="{dg.selectedItem.color}"/>
-			<s:TextInput x="564" y="10" width="140" fontSize="12" text="{dg.selectedItem.drink_start}"/>
-			<s:TextInput x="564" y="30" width="140" fontSize="12" text="{dg.selectedItem.drink_end}"/>
-			<s:TextInput x="564" y="50" width="140" fontSize="12" text="{dg.selectedItem.best_start}"/>
-			<s:TextInput x="564" y="70" width="140" fontSize="12" text="{dg.selectedItem.best_end}"/>
-			<s:TextInput x="564" y="90" width="140" fontSize="12" text="{dg.selectedItem.eventID}"/>
-			<s:TextInput x="564" y="110" width="140" fontSize="12" text="{dg.selectedItem.comments}"/>
-		</s:BorderContainer>
+		<s:SkinnableContainer x="10" y="10" width="708" height="553" >
+			<s:layout>
+				<s:VerticalLayout gap="5" /> 
+			</s:layout>
+			
+			<mx:DataGrid id="dg" y="11.1" width="708" height="289" dataProvider="{listData}" fontSize="12" x="10.2" editable="false" variableRowHeight="true">
+				<mx:columns>
+					<mx:DataGridColumn dataField="wineID" headerText="WineID" visible="false"/>
+					<mx:DataGridColumn dataField="color" headerText="Color" width="100" wordWrap="true"/>
+					<mx:DataGridColumn dataField="wine_name" headerText="Wine Name" width="300" wordWrap="true"/>
+					<mx:DataGridColumn dataField="region" headerText="Region" width="200" wordWrap="true"/> 
+					<!--mx:DataGridColumn dataField="grape_type" headerText="Grape"/-->
+					
+					<mx:DataGridColumn dataField="year" headerText="Year" width="50" wordWrap="true"/>
+				</mx:columns>
+			</mx:DataGrid>
+			
+			<s:SkinnableContainer id="bottle_information"  skinClass="mySkins.CharacteristicsDisplay" width="708" height="251">
+				<s:SkinnableContainer width="707" height="27">
+					<s:layout>
+						<s:TileLayout orientation="rows"/>
+					</s:layout>
+					<s:Button label="Button"/>
+					<s:Button label="Button"/>
+					<s:Button label="Button"/>
+				</s:SkinnableContainer>
+				
+				
+				<s:SkinnableContainer width="708" height="195">
+					<s:layout>
+						<s:HorizontalLayout/>
+					</s:layout>
+					<s:SkinnableContainer skinClass="mySkins.Labels">
+						<s:Label text="Wine Name" fontSize="12"/>
+						<s:Label text="Region" fontSize="12"/>
+						<s:Label text="Color" fontSize="12" />
+						<s:Label text="Year" fontSize="12"/>
+						<s:Label text="Grape Type" fontSize="12"/>
+						<s:Label text="Appelation" fontSize="12"/>
+						<s:Label text="Classification" fontSize="12"/>
+					</s:SkinnableContainer>
+					<s:SkinnableContainer skinClass="mySkins.Fields" width="140">
+						<s:TextInput fontSize="12" text="{dg.selectedItem.wine_name}"/>
+						<s:TextInput fontSize="12" text="{dg.selectedItem.region}" />
+						<s:TextInput fontSize="12" text="{dg.selectedItem.color}"/>
+						<s:TextInput fontSize="12" text="{dg.selectedItem.year}"/>
+						<s:TextInput fontSize="12" text="{dg.selectedItem.grape_type}"/>
+						<s:TextInput fontSize="12" text="{dg.selectedItem.apelation}"/>
+						<s:TextInput fontSize="12" text="{dg.selectedItem.classification}"/>				
+					</s:SkinnableContainer>
+					
+					<s:SkinnableContainer skinClass="mySkins.Labels">
+						<s:Label text="Price" fontSize="12" height="13"/>
+						<s:Label text="Grading" fontSize="12" height="13"/>
+						<s:Label text="Bottle Size" fontSize="12" height="13"/>
+						<s:Label text="Purchase Date" fontSize="12" height="13"/>
+						<s:Label text="Removal Date" fontSize="12" height="13"/>
+					</s:SkinnableContainer>
+					<s:SkinnableContainer skinClass="mySkins.Fields" width="140">
+						<s:TextInput fontSize="12" text="{dg.selectedItem.removal_date}"/>
+						<s:TextInput fontSize="12" text="{dg.selectedItem.purchase_date}"/>
+						<s:TextInput fontSize="12" text="{dg.selectedItem.bottle_size}"/>
+						<s:TextInput fontSize="12" text="{dg.selectedItem.grading}"/>
+						<s:TextInput fontSize="12" text="{dg.selectedItem.price}"/>
+					</s:SkinnableContainer>
+					<s:SkinnableContainer skinClass="mySkins.Labels">
+						<s:Label text="Drink Start" fontSize="12" height="12"/>
+						<s:Label text="Drink End" fontSize="12" height="12"/>
+						<s:Label text="Best Start" fontSize="12" height="12"/>
+						<s:Label text="Best End" fontSize="12" height="12"/>
+						<s:Label text="Event" fontSize="12" height="12"/>
+						<s:Label text="Comment" fontSize="12" height="12"/>
+					</s:SkinnableContainer>
+					
+					<s:SkinnableContainer skinClass="mySkins.Fields" width="140">
+						<s:TextInput fontSize="12" text="{dg.selectedItem.drink_start}"/>
+						<s:TextInput fontSize="12" text="{dg.selectedItem.drink_end}"/>
+						<s:TextInput fontSize="12" text="{dg.selectedItem.best_start}"/>
+						<s:TextInput fontSize="12" text="{dg.selectedItem.best_end}"/>
+						<s:TextInput fontSize="12" text="{dg.selectedItem.eventID}"/>
+						<s:TextInput fontSize="12" text="{dg.selectedItem.comments}"/>					
+					</s:SkinnableContainer>
+					
+
+
+				</s:SkinnableContainer>
+				
+			</s:SkinnableContainer>
+			
+			
+		</s:SkinnableContainer>
 	</s:Panel>
+	
 	<fx:DesignLayer d:userLabel="Layer 1">
 		<s:Ellipse alpha="0.24" height="219" width="731" x="30.5" y="-125.5" x.Page2="147" y.Page2="-125.5" x.Page1="147" x.Page3="147" width.Page2="730" width.Page3="730" width.Page1="730">
 			<s:stroke>
