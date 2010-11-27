@@ -66,12 +66,12 @@
 	<fx:Declarations>
 		<mx:HTTPService 
 			id="wineService"
-			url="http://localhost:8888/wines.php"
+			url="http://localhost:80/wines.php"
 			resultFormat="e4x" fault="handleFault(event)"
 			useProxy="false"/>
 		<s:HTTPService
 			id="WineServiceChart"
-			url="http://localhost:8888/wines.php"
+			url="http://localhost:80/wines.php"
 			resultFormat="e4x" fault="handleFault(event)"
 			useProxy="false"/>
 		<mx:SeriesInterpolate id="interpolate" duration="500"/> 
@@ -97,7 +97,7 @@
 		<s:State name="Page3"/>
 		<s:State name="Page2_editable"/>
 	</s:states>
-	<s:Panel includeIn="Page2,Page2_editable" x="147" y="102" width="730" height="606" x.Page2="267" y.Page2="102" x.Page2_editable="267" y.Page2_editable="102">
+	<s:Panel includeIn="Page2,Page2_editable" x="147" y="102" width="730" height="606">
 		<s:SkinnableContainer x="10" y="10" width="708" height="553" >
 			<s:layout>
 				<s:VerticalLayout gap="15" /> 
@@ -193,7 +193,7 @@
 	</s:Panel>
 	
 	<fx:DesignLayer d:userLabel="Layer 1">
-		<s:Ellipse alpha="0.24" height="219" width="730"  x="248" y="-125.5">
+		<s:Ellipse alpha="0.24" height="219" y="-125.5" x="147" width="730" >
 			<s:stroke>
 				<s:SolidColorStroke caps="none" color="#5380D0" joints="miter" miterLimit="4" weight="1"/>
 			</s:stroke>
@@ -201,25 +201,18 @@
 				<s:SolidColor color="#5380D0"/>
 			</s:fill>
 		</s:Ellipse>
-
-		<!--<s:Button skinClass="components.Button6" x="192" y="4" click.Page1="fill2()" click.Page2="chartByYear();currentState='Page1'" x.Page2="312" y.Page2="4" x.Page1="312" x.Page3="312"/>
-		<s:Button skinClass="components.Button7" x="278" y="4" x.Page2="398" y.Page2="4" x.Page1="398" x.Page3="398" visible="true"/>-->
-
-		<s:Button skinClass="components.Button8" click="chartByYear();currentState='Page1'" x="417" y="4"/>
-		<s:Button skinClass="components.Button6" click="fill2()" x="497" y="4"/>
-		<s:Button skinClass="components.Button7" x="577" y="4"/>
-		<s:Button skinClass="components.Button1" id="button4" x="657" y="4"/>
-		<s:Button skinClass="components.Button2" id="button5" x="737" y="4"/>
+		<s:Button skinClass="components.Button6" click.Page1="fill2()" click.Page2="chartByYear();currentState='Page1'" x="312" y="4" includeIn="Page1,Page2,Page2_editable,Page3"/>
+		<s:Button skinClass="components.Button7" y="4" x.Page2="398" y.Page2="4" x.Page1="398" x.Page3="398" x.Page2_editable="398" y.Page2_editable="4"/>
 	</fx:DesignLayer>
-	<s:Panel includeIn="Page2,Page2_editable" x="884" y="101" width="130" height="607" x.Page2="1004" y.Page2="101" x.Page2_editable="1004" y.Page2_editable="101">
+	<s:Panel includeIn="Page2,Page2_editable" x="884" y="101" width="130" height="607">
 	</s:Panel>
-	<s:Panel includeIn="Page2,Page2_editable" x="10" y="101" width="130" height="607" x.Page2="130" y.Page2="101" x.Page2_editable="130" y.Page2_editable="101">
+	<s:Panel includeIn="Page2,Page2_editable" x="10" y="101" width="130" height="607">
 		<mx:Accordion x="0" y="-32" width="128" height="606">
 			<s:NavigatorContent label="Accordion Pane 1" width="100%" height="100%">
 			</s:NavigatorContent>
 		</mx:Accordion>
 	</s:Panel>
-	<mx:ViewStack id="vs1" includeIn="Page1" x="444.4" y="253.5" width="400" height="400">
+	<mx:ViewStack id="vs1" includeIn="Page1" x="307.1" y="209.8" width="400" height="400">
 		<s:NavigatorContent label="View1" width="100%" height="100%">
 			<mx:PieChart x="110" y="0" id="piechart1" width="290" height="290" itemClick="piechart1_itemClickHandler(event)" dataProvider="{listData}" showDataTips="true">
 				<mx:series>
@@ -236,11 +229,11 @@
 			</mx:LineChart>
 		</s:NavigatorContent>
 	</mx:ViewStack>
-	<s:Label includeIn="Page1" x="315" y="166" text="Chart Type:" fontSize="12" height="21" verticalAlign="middle"/>
-	<s:DropDownList id="dd1" includeIn="Page1" x="385" y="166" dataProvider="{dd1Data}" labelField="@label" fontSize="12" change="dd1_changeHandler(event)"></s:DropDownList>
-	<s:Label includeIn="Page1" x="545" y="166" text="Category 1:" fontSize="12" height="21" verticalAlign="middle"/>
-	<s:DropDownList includeIn="Page1" x="615" y="166"></s:DropDownList>
-	<s:Label includeIn="Page1" x="775" y="166" text="Category 2:" fontSize="12" height="21" verticalAlign="middle"/>
-	<s:DropDownList includeIn="Page1" x="845" y="166"></s:DropDownList>
+	<s:Label includeIn="Page1" x="175" y="166" text="Chart Type:" fontSize="12" height="21" verticalAlign="middle"/>
+	<s:DropDownList id="dd1" includeIn="Page1" x="245" y="166" dataProvider="{dd1Data}" labelField="@label" fontSize="12" change="dd1_changeHandler(event)"></s:DropDownList>
+	<s:Label includeIn="Page1" x="405" y="166" text="Category 1:" fontSize="12" height="21" verticalAlign="middle"/>
+	<s:DropDownList includeIn="Page1" x="475" y="166"></s:DropDownList>
+	<s:Label includeIn="Page1" x="635" y="166" text="Category 2:" fontSize="12" height="21" verticalAlign="middle"/>
+	<s:DropDownList includeIn="Page1" x="705" y="166"></s:DropDownList>
 	
 </s:WindowedApplication>

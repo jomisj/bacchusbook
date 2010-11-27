@@ -7,30 +7,8 @@
 		<s:State name="down"/>
 		<s:State name="disabled"/>
 	</s:states>
-	<s:Ellipse height="182" width="182" x="0.5" y="0.5" includeIn="disabled" id="ellipse1">
-		<s:stroke>
-			<s:SolidColorStroke caps="none" color="#5380D0" joints="miter" miterLimit="4" weight="1"/>
-		</s:stroke>
-		<s:fill>
-			<s:LinearGradient rotation="101.31">
-				<s:GradientEntry alpha="1" color="#FF5800" ratio="0"/>
-				<s:GradientEntry alpha="1" color="#000000" ratio="1"/>
-			</s:LinearGradient>
-		</s:fill>
-	</s:Ellipse>
-	<s:BitmapImage smooth="true" source="@Embed('/assets/images/WineButton2.png')" includeIn="over" x="13" y="6" id="bitmapimage2"/>
-	<s:BitmapImage smooth="true" source="@Embed('/assets/images/WineButton3.png')" includeIn="down" x="20" y="13" id="bitmapimage3"/>
-	<s:BitmapImage smooth="true" source="@Embed('/assets/images/WineButton1_test2.png')" includeIn="up" x="13" y="6" id="bitmapimage4"/>
-	<s:transitions>
-		<s:Transition fromState="over" toState="up" autoReverse="true">
-			<s:Parallel>
-				<s:Parallel target="{bitmapimage2}">
-					<s:Fade duration="0"/>
-				</s:Parallel>
-				<s:Parallel target="{bitmapimage4}">
-					<s:Fade duration="0"/>
-				</s:Parallel>
-			</s:Parallel>
-		</s:Transition>
-	</s:transitions>
+	<s:BitmapImage height="75" id="bitmapimage2" includeIn="up" smooth="true" source="@Embed('/assets/images/WMeal3.png')" width="75" x="0" y="0"/>
+	<s:BitmapImage height="75" id="bitmapimage3" includeIn="over" smooth="true" source="@Embed('/assets/images/WMeal4.png')" width="75" x="0" y="0"/>
+	<s:BitmapImage height="75" id="bitmapimage4" includeIn="down" smooth="true" source="@Embed('/assets/images/WMeal_New4.png')" width="75" x="0" y="0"/>
+	<s:BitmapImage height="75" id="bitmapimage5" includeIn="disabled" smooth="true" source="@Embed('/assets/images/WMeal6.png')" width="75" x="0" y="0"/>
 </s:Skin>

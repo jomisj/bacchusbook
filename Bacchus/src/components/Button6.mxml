@@ -7,8 +7,20 @@
 		<s:State name="down"/>
 		<s:State name="disabled"/>
 	</s:states>
-	<s:BitmapImage height="75" includeIn="up" smooth="true" source="@Embed('/assets/images/WBrowse6.png')" width="75" x="0" y="0"/>
-	<s:BitmapImage height="75" includeIn="over" smooth="true" source="@Embed('/assets/images/WBrowse7.png')" width="75" x="0" y="0"/>
-	<s:BitmapImage height="75" includeIn="down" smooth="true" source="@Embed('/assets/images/WBrowse8.png')" width="75" x="0" y="0"/>
-	<s:BitmapImage height="75" includeIn="disabled" smooth="true" source="@Embed('/assets/images/WBrowse9.png')" width="75" x="0" y="0"/>
+	<s:BitmapImage height="75" id="bitmapimage1" includeIn="up" smooth="true" source="@Embed('/assets/images/WBrowse6.png')" width="75" x="0" y="0"/>
+	<s:BitmapImage height="75" id="bitmapimage2" includeIn="over" smooth="true" source="@Embed('/assets/images/WBrowse7.png')" width="75" x="0" y="0"/>
+	<s:BitmapImage height="75" id="bitmapimage5" includeIn="disabled" smooth="true" source="@Embed('/assets/images/WBrowse10.png')" width="75" x="0" y="0"/>
+	<s:BitmapImage height="75" id="bitmapimage6" includeIn="down" smooth="true" source="@Embed('/assets/images/WBrowse11.png')" width="75" x="0" y="0"/>
+	<s:transitions>
+		<s:Transition autoReverse="true" fromState="down" toState="up">
+			<s:Parallel>
+				<s:Parallel target="{bitmapimage1}">
+					<s:Fade duration="0"/>
+				</s:Parallel>
+				<s:Parallel target="{bitmapimage6}">
+					<s:Fade duration="0"/>
+				</s:Parallel>
+			</s:Parallel>
+		</s:Transition>
+	</s:transitions>
 </s:Skin>
