@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Skin xmlns:s="library://ns.adobe.com/flex/spark" xmlns:fx="http://ns.adobe.com/mxml/2009">
+	<fx:Metadata>[HostComponent("spark.components.Button")]</fx:Metadata>
+	<s:states>
+		<s:State name="up"/>
+		<s:State name="over"/>
+		<s:State name="down"/>
+		<s:State name="disabled"/>
+	</s:states>
+	<s:BitmapImage height="75" id="bitmapimage1" includeIn="up" smooth="true" source="@Embed('/assets/images/WBrowse11.png')" width="75" x="0" y="0"/>
+	<s:BitmapImage height="75" id="bitmapimage2" includeIn="over" smooth="true" source="@Embed('/assets/images/WBrowse11.png')" width="75" x="0" y="0"/>
+	<s:BitmapImage height="75" id="bitmapimage5" includeIn="disabled" smooth="true" source="@Embed('/assets/images/WBrowse10.png')" width="75" x="0" y="0"/>
+	<s:BitmapImage height="75" id="bitmapimage6" includeIn="down" smooth="true" source="@Embed('/assets/images/WBrowse11.png')" width="75" x="0" y="0"/>
+	<s:transitions>
+		<s:Transition autoReverse="true" fromState="down" toState="up">
+			<s:Parallel>
+				<s:Parallel target="{bitmapimage1}">
+					<s:Fade duration="0"/>
+				</s:Parallel>
+				<s:Parallel target="{bitmapimage6}">
+					<s:Fade duration="0"/>
+				</s:Parallel>
+			</s:Parallel>
+		</s:Transition>
+	</s:transitions>
+</s:Skin>

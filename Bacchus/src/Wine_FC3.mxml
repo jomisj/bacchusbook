@@ -11,6 +11,8 @@
 	<fx:Style source="Main.css"/>
 	<fx:Script>
 		<![CDATA[
+			import components.ButtonBrowse_Pressed;
+			
 			import mx.collections.ArrayCollection;
 			import mx.events.FlexEvent;
 			import mx.events.ListEvent;
@@ -43,35 +45,35 @@
 				}
 			}
 			
-
+			
 			protected function remove_button_clickHandler(event:MouseEvent):void
 			{
 				
 			}
-
-
+			
+			
 			protected function edit_button_clickHandler(event:MouseEvent):void
 			{
 				currentState="Page2_editable";
 			}
-
-
+			
+			
 			protected function dg_itemClickHandler(event:ListEvent):void
 			{
 				currentState="Page2";
 			}
-
+			
 		]]>
 	</fx:Script>
 	<fx:Declarations>
 		<mx:HTTPService 
 			id="wineService"
-			url="http://localhost:8888/wines.php"
+			url="http://localhost:80/wines.php"
 			resultFormat="e4x" fault="handleFault(event)"
 			useProxy="false"/>
 		<s:HTTPService
 			id="WineServiceChart"
-			url="http://localhost:8888/wines.php"
+			url="http://localhost:80/wines.php"
 			resultFormat="e4x" fault="handleFault(event)"
 			useProxy="false"/>
 		<mx:SeriesInterpolate id="interpolate" duration="500"/> 
@@ -182,8 +184,8 @@
 						<s:TextInput fontSize="12" text="{dg.selectedItem.comments}" editable="false" borderVisible="false" contentBackgroundAlpha.Page2="0" borderVisible.Page2_editable="true" editable.Page2_editable="true"/>					
 					</s:SkinnableContainer>
 					
-
-
+					
+					
 				</s:SkinnableContainer>
 				
 			</s:SkinnableContainer>
@@ -193,7 +195,7 @@
 	</s:Panel>
 	
 	<fx:DesignLayer d:userLabel="Layer 1">
-		<s:Ellipse alpha="0.24" height="219" width="730"  x="248" y="-125.5">
+		<s:Ellipse alpha="0.24" height="219" width="730"  horizontalCenter="0.5" top="-130.5">
 			<s:stroke>
 				<s:SolidColorStroke caps="none" color="#5380D0" joints="miter" miterLimit="4" weight="1"/>
 			</s:stroke>
@@ -201,15 +203,32 @@
 				<s:SolidColor color="#5380D0"/>
 			</s:fill>
 		</s:Ellipse>
-
+		
 		<!--<s:Button skinClass="components.Button6" x="192" y="4" click.Page1="fill2()" click.Page2="chartByYear();currentState='Page1'" x.Page2="312" y.Page2="4" x.Page1="312" x.Page3="312"/>
 		<s:Button skinClass="components.Button7" x="278" y="4" x.Page2="398" y.Page2="4" x.Page1="398" x.Page3="398" visible="true"/>-->
+		<s:SkinnableContainer horizontalCenter="0.5" width="407">
+			<s:layout>
+				<s:HorizontalLayout/>
+			</s:layout>
+			<s:Button skinClass="components.ButtonStats"
+					  skinClass.Page1="components.ButtonStats_Pressed"
+					  click="chartByYear();currentState='Page1'" />
+			<s:Button skinClass.Page2="components.ButtonBrowse_Pressed"
+					  skinClass.Page2_editable="components.ButtonBrowse_Pressed"
+					  skinClass="components.ButtonBrowse" 
+					  click="fill2();currentState='Page2'" />
+			<s:Button skinClass="components.ButtonAdd" 
+					  click="currentState='Page2'"/>
+			<s:Button skinClass="components.ButtonMeal" 
+					  id="button4" 
+					  click="currentState='Page2'"/>
+			<s:Button skinClass="components.ButtonAdvanced" 
+					  id="button5" 
+					  click="currentState='Page2'"/>
+		</s:SkinnableContainer>
+		
 
-		<s:Button skinClass="components.Button8" click="chartByYear();currentState='Page1'" x="417" y="4"/>
-		<s:Button skinClass="components.Button6" click="fill2()" x="497" y="4"/>
-		<s:Button skinClass="components.Button7" x="577" y="4"/>
-		<s:Button skinClass="components.Button1" id="button4" x="657" y="4"/>
-		<s:Button skinClass="components.Button2" id="button5" x="737" y="4"/>
+		
 	</fx:DesignLayer>
 	<s:Panel includeIn="Page2,Page2_editable" x="884" y="101" width="130" height="607" x.Page2="1004" y.Page2="101" x.Page2_editable="1004" y.Page2_editable="101">
 	</s:Panel>
