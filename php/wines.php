@@ -16,12 +16,6 @@ if (!mysql_select_db("wines")) {
 }
 
 switch (@$_REQUEST["method"]) {
-	case "FindAll":
-		$ret = FindAllWines();
-		// the XmlSerializer uses a PEAR xml parser to generate an xml response.
-		$serializer = new XmlSerializer();
-		echo $serializer->serialize($ret);
-		break;
         case "FindAllbyYear":
 		$ret = FindAllWines2();
 		$serializer = new XmlSerializer();
@@ -37,6 +31,10 @@ switch (@$_REQUEST["method"]) {
 		$ret = InsertWine();
 		echo $ret;
 		break;
+        case "updateWine":
+                $ret = updateWine();
+                echo $ret;
+                break;
         case "chartGroupbyYear":
                 $ret = chartGroupbyYear();
 		$serializer = new XmlSerializer();
@@ -119,6 +117,53 @@ function FindAllWines2() {
 	}
 
 	return array("data" => $toret);
+}
+
+function updateWine() {
+	global $conn;
+
+	$query_update_ch = sprintf("UPDATE characteristics SET wine_name = %s, region=%s, grape_type=%s, appelation=%s, classification=%s, color=%s, year=%s, grading=%u, comments=%s WHERE wineID=%u",
+		GetSQLValueString($_REQUEST["wine_name"], "text"),
+		GetSQLValueString($_REQUEST["region"], "text"),
+		GetSQLValueString($_REQUEST["grape_type"], "text"),
+		GetSQLValueString($_REQUEST["appelation"], "text"),
+		GetSQLValueString($_REQUEST["classification"], "text"),
+		GetSQLValueString($_REQUEST["color"], "text"),
+		GetSQLValueString($_REQUEST["year"], "date"),
+		GetSQLValueString($_REQUEST["grading"], "int"),
+		GetSQLValueString($_REQUEST["comments"], "text"),
+                GetSQLValueString($_REQUEST["wineID"], "int")
+	);
+
+        $query_update_bt = sprintf("UPDATE bottles SET price = %f, bottle_size=%s, purchase_date=%s, removal_date=%s, drink_start=%u, drink_end=%u, best_start=%u, best_end=%u WHERE bottleID = %u",
+		GetSQLValueString($_REQUEST["price"], "test"),
+		GetSQLValueString($_REQUEST["bottle_size"], "text"),
+		GetSQLValueString($_REQUEST["purchase_date"], "date"),
+		GetSQLValueString($_REQUEST["removal_date"], "date"),
+		GetSQLValueString($_REQUEST["drink_start"], "int"),
+		GetSQLValueString($_REQUEST["drink_end"], "int"),
+		GetSQLValueString($_REQUEST["best_start"], "int"),
+		GetSQLValueString($_REQUEST["best_end"], "int"),
+		GetSQLValueString($_REQUEST["bottleID"], "int")
+	);
+
+
+	$ok = mysql_query($query_update_ch,$conn);
+
+	if (!$ok) {
+		return 1;
+		//exit("Unable to insert to DB: " . mysql_error());
+	}
+	else {
+		$ok = mysql_query($query_update_bt,$conn);
+                if (!$ok) {
+                        return 1;
+                        //exit("Unable to insert to DB: " . mysql_error());
+                }
+                else {
+                    return 0;
+                }
+	}
 }
 
 function InsertWine() {
