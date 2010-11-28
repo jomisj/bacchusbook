@@ -311,40 +311,40 @@
 				<s:VerticalLayout />
 			</s:layout>
 			<s:HGroup >
-				<s:Button skinClass="components.WineLocation"/>
-				<s:Button skinClass="components.WineLocation"/>
-				<s:Button skinClass="components.WineLocation"/>
-				<s:Button skinClass="components.WineLocation"/>				
+				<s:Button id="R61" skinClass="components.WineLocation"/>
+				<s:Button id="R62" skinClass="components.WineLocation"/>
+				<s:Button id="R63" skinClass="components.WineLocation"/>
+				<s:Button id="R64" skinClass="components.WineLocation"/>				
 			</s:HGroup>
 			<s:HGroup>
-				<s:Button skinClass="components.WineLocation"/>
-				<s:Button skinClass="components.WineLocation"/>
-				<s:Button skinClass="components.WineLocation"/>
-				<s:Button skinClass="components.WineLocation"/>				
+				<s:Button id="R51" skinClass="components.WineLocation"/>
+				<s:Button id="R52" skinClass="components.WineLocation"/>
+				<s:Button id="R53" skinClass="components.WineLocation"/>
+				<s:Button id="R54" skinClass="components.WineLocation"/>				
 			</s:HGroup>
 			<s:HGroup>
-				<s:Button skinClass="components.WineLocation"/>
-				<s:Button skinClass="components.WineLocation"/>
-				<s:Button skinClass="components.WineLocation"/>
-				<s:Button skinClass="components.WineLocation"/>				
+				<s:Button id="R41" skinClass="components.WineLocation"/>
+				<s:Button id="R42" skinClass="components.WineLocation"/>
+				<s:Button id="R43" skinClass="components.WineLocation"/>
+				<s:Button id="R44" skinClass="components.WineLocation"/>				
 			</s:HGroup>
 			<s:HGroup>
-				<s:Button skinClass="components.WineLocation"/>
-				<s:Button skinClass="components.WineLocation"/>
-				<s:Button skinClass="components.WineLocation"/>
-				<s:Button skinClass="components.WineLocation"/>				
+				<s:Button id="R31" skinClass="components.WineLocation"/>
+				<s:Button id="R32" skinClass="components.WineLocation"/>
+				<s:Button id="R33" skinClass="components.WineLocation"/>
+				<s:Button id="R34" skinClass="components.WineLocation"/>				
 			</s:HGroup>
 			<s:HGroup>
-				<s:Button skinClass="components.WineLocation"/>
-				<s:Button skinClass="components.WineLocation"/>
-				<s:Button skinClass="components.WineLocation"/>
-				<s:Button skinClass="components.WineLocation"/>				
+				<s:Button id="R21" skinClass="components.WineLocation"/>
+				<s:Button id="R22" skinClass="components.WineLocation"/>
+				<s:Button id="R23" skinClass="components.WineLocation"/>
+				<s:Button id="R24" skinClass="components.WineLocation"/>				
 			</s:HGroup>
 			<s:HGroup>
-				<s:Button skinClass="components.WineLocation"/>
-				<s:Button skinClass="components.WineLocation"/>
-				<s:Button skinClass="components.WineLocation"/>
-				<s:Button skinClass="components.WineLocation"/>				
+				<s:Button id="R11" skinClass="components.WineLocation"/>
+				<s:Button id="R12" skinClass="components.WineLocation"/>
+				<s:Button id="R13" skinClass="components.WineLocation"/>
+				<s:Button id="R14" skinClass="components.WineLocation"/>				
 			</s:HGroup>
 		</s:SkinnableContainer>
 	</s:Panel>

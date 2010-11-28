@@ -152,7 +152,7 @@ public function updateWine():void{
 		"bottleID" : parseInt(dg.selectedItem.bottleID), 
 		"price": price.text, "bottle_size": bottle_size.text,
 		"purchase_date": purchase_date.text, "removal_date": removal_date.text,
-		"event_comment": event_comment.text,
+		"eventID":parseInt(dg.selectedItem.eventID), "event_comment": event_comment.text,
 		"drink_start": drink_start.text, "drink_end": drink_end.text,
 		"best_start": best_start.text, "best_end": best_end.text
 		}; 
