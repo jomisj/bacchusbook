@@ -17,8 +17,6 @@ import mx.controls.Alert;
 import mx.events.ItemClickEvent;
 import mx.rpc.events.ResultEvent;
 
-
-private var params:Object = new Object();
 [Bindable]
 private var listData:XMLListCollection; 
 [Bindable]
@@ -41,6 +39,17 @@ public function insertItemHandler(event:ResultEvent):void {
 	}
 }
 
+public function updateItemHandler(event:ResultEvent):void {	
+	var result:int = parseInt(String(event.result));
+	//var result:int = 1;
+	if (result ==0){
+		fill2();
+	}
+	else {
+		Alert.show("Update Failed!! Please retry.", "Alert Box", mx.controls.Alert.OK);
+	}
+}
+
 public function WineServiceChart_resultHandler(event:ResultEvent):void
 {
 	var result:XML = XML(event.result);  
@@ -48,17 +57,8 @@ public function WineServiceChart_resultHandler(event:ResultEvent):void
 	listData = new XMLListCollection(xmlList); 
 }
 
-/*public function fill():void{
-	wineService.removeEventListener(ResultEvent.RESULT,insertItemHandler);
-	wineService.addEventListener(ResultEvent.RESULT,resultHandler);
-	wineService.method = "GET";
-	params['method'] = "FindAll";
-	wineService.cancel();
-	wineService.send(params);
-	currentState='Page2';
-}*/
-
 public function chartByYear():void{
+	var params:Object = new Object();
 	WineServiceChart.addEventListener(ResultEvent.RESULT,WineServiceChart_resultHandler);
 	WineServiceChart.method="GET";
 	params['method'] = "chartGroupbyYear";
@@ -68,6 +68,7 @@ public function chartByYear():void{
 
 public function piechart1_itemClickHandler(event:ChartItemEvent):void{
 	//Alert.show(event.hitData.item.year,"You Clicked..");
+	var params:Object = new Object();
 	wineService.removeEventListener(ResultEvent.RESULT,insertItemHandler);
 	wineService.removeEventListener(ResultEvent.RESULT,WineServiceChart_resultHandler);
 	wineService.addEventListener(ResultEvent.RESULT,resultHandler);
@@ -80,7 +81,9 @@ public function piechart1_itemClickHandler(event:ChartItemEvent):void{
 }
 
 public function fill2():void{
+	var params:Object = new Object();
 	wineService.removeEventListener(ResultEvent.RESULT,insertItemHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,updateItemHandler);
 	wineService.removeEventListener(ResultEvent.RESULT,WineServiceChart_resultHandler);
 	wineService.addEventListener(ResultEvent.RESULT,resultHandler);
 	wineService.method = "GET";
@@ -105,14 +108,24 @@ public function insertWine():void{
 }
 */
 public function updateWine():void{
+	var params:Object = new Object();
+	//Alert.show("Inside Update", "Alert Box", mx.controls.Alert.OK);
 	wineService.removeEventListener(ResultEvent.RESULT,resultHandler);
-	wineService.addEventListener(ResultEvent.RESULT,insertItemHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,insertItemHandler);
+	wineService.addEventListener(ResultEvent.RESULT,updateItemHandler);
 	wineService.method = "POST";
-	params = {"method": "updateWine", "WineID": dg.selectedItem.wineID, "wine_name": wine_name.text,
+	params = {"method": "updateWine", "wineID": parseInt(dg.selectedItem.wineID), "wine_name": wine_name.text,
 		"region": region.text, "grape_type": grape_type.text,
 		"appelation": appelation.text, "classification": classification.text,
 		"color": color.text, "year": year.text,
-		"grading": grading.text, "comments": comments.text}; 
+		"grading": grading.text, "comments": comments.text,
+		"bottleID" : parseInt(dg.selectedItem.bottleID), 
+		"price": price.text, "bottle_size": bottle_size.text,
+		"purchase_date": purchase_date.text, "removal_date": removal_date.text,
+		"event_comment": event_comment.text,
+		"drink_start": drink_start.text, "drink_end": drink_end.text,
+		"best_start": best_start.text, "best_end": best_end.text
+		}; 
 	wineService.cancel();
 	wineService.send(params);
 }

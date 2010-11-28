@@ -74,12 +74,12 @@
 	<fx:Declarations>
 		<mx:HTTPService 
 			id="wineService"
-			url="http://localhost:80/wines.php"
+			url="http://localhost:8888/wines.php"
 			resultFormat="e4x" fault="handleFault(event)"
 			useProxy="false"/>
 		<s:HTTPService
 			id="WineServiceChart"
-			url="http://localhost:80/wines.php"
+			url="http://localhost:8888/wines.php"
 			resultFormat="e4x" fault="handleFault(event)"
 			useProxy="false"/>
 		<mx:SeriesInterpolate id="interpolate" duration="500"/> 
@@ -119,6 +119,7 @@
 						 itemClick.Page2_editable="dg_itemClickHandler(event)"  selectedIndex="0">
 				<mx:columns>
 					<mx:DataGridColumn dataField="wineID" headerText="WineID" visible="false"/>
+					<mx:DataGridColumn dataField="bottleID" headerText="BottleID" visible="false"/>
 					<mx:DataGridColumn dataField="color" headerText="Color" width="100" wordWrap="true"/>
 					<mx:DataGridColumn dataField="wine_name" headerText="Wine Name" width="300" wordWrap="true"/>
 					<mx:DataGridColumn dataField="region" headerText="Region" width="200" wordWrap="true"/> 
@@ -252,7 +253,7 @@
 							  click.Page2_editable="currentState='Page2';currentState='Page2_editable'"/>
 					<s:Button id="save_button" label="Save"
 							  visible.Page2="false"
-							  click.Page2_editable="updateWine();currentState='Page2'"/>						
+							  click.Page2_editable="updateWine();"/>						
 				</s:SkinnableContainer>
 				
 			</s:SkinnableContainer>
