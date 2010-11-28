@@ -44,6 +44,10 @@ switch (@$_REQUEST["method"]) {
 		$serializer = new XmlSerializer();
 		echo $serializer->serialize($ret);
                 break;
+        case "addAnotherBottle":
+		$ret = addAnotherBottle();
+		echo $ret;
+		break;
 	default:
 		$ret = FindAllWines();
 		// the XmlSerializer uses a PEAR xml parser to generate an xml response.
@@ -182,7 +186,7 @@ function updateWine() {
                 GetSQLValueString($_REQUEST["wineID"], "int")
 	);
         $query_update_bt = sprintf("UPDATE bottles SET price = %f, bottle_size=%s, purchase_date=%s, removal_date=%s, eventID=%u, drink_start=%u, drink_end=%u, best_start=%u, best_end=%u WHERE bottleID = %u",
-		GetSQLValueString($_REQUEST["price"], "test"),
+		GetSQLValueString($_REQUEST["price"], "text"),
 		GetSQLValueString($_REQUEST["bottle_size"], "text"),
 		GetSQLValueString($_REQUEST["purchase_date"], "date"),
 		GetSQLValueString($_REQUEST["removal_date"], "date"),
@@ -284,6 +288,79 @@ global $conn;
             else {            
 		return 0;
             }
+	}
+}
+
+function addAnotherBottle() {
+	global $conn;
+
+        if ((GetSQLValueString($_REQUEST["event_comment"], "text")) != "NULL")
+        {
+            $query_event_max = "SELECT MAX(eventID) as MNUM FROM event";
+            $recordset = mysql_query($query_event_max,$conn);
+            $rs = mysql_fetch_assoc($recordset);
+            $maxnum = intval($rs['MNUM']);
+            $maxnum++;
+            $query_insert_ev = sprintf("INSERT INTO event (eventID, comment) VALUES (%u, %s)",
+                    $maxnum,
+                    GetSQLValueString($_REQUEST["event_comment"], "text")
+                    );
+
+            echo $query_insert_ev;
+
+            $ok = mysql_query($query_insert_ev,$conn);
+            if (!$ok) {
+                    return 1;
+            }
+
+            $_REQUEST["eventID"] = $maxnum;
+        }else{
+            $_REQUEST["eventID"] = "NULL";
+        }
+
+	/*$query_update_ch = sprintf("UPDATE characteristics SET wine_name = %s, region=%s, grape_type=%s, appelation=%s, classification=%s, color=%s, year=%s, grading=%u, comments=%s WHERE wineID=%u",
+		GetSQLValueString($_REQUEST["wine_name"], "text"),
+		GetSQLValueString($_REQUEST["region"], "text"),
+		GetSQLValueString($_REQUEST["grape_type"], "text"),
+		GetSQLValueString($_REQUEST["appelation"], "text"),
+		GetSQLValueString($_REQUEST["classification"], "text"),
+		GetSQLValueString($_REQUEST["color"], "text"),
+		GetSQLValueString($_REQUEST["year"], "date"),
+		GetSQLValueString($_REQUEST["grading"], "int"),
+		GetSQLValueString($_REQUEST["comments"], "text"),
+                GetSQLValueString($_REQUEST["wineID"], "int")
+	);*/
+        
+        $query_insert_bt = "INSERT INTO bottles (wineID, price, bottle_size, purchase_date, ";
+        if ((GetSQLValueString($_REQUEST["event_comment"], "text")) != "NULL"){
+            $query_insert_bt = $query_insert_bt . "eventID, ";
+        }
+        $query_insert_bt = $query_insert_bt."drink_start, drink_end, best_start, best_end) VALUES (";
+
+        $query_insert_bt= $query_insert_bt.sprintf("%u, %f, %s, %s, ",
+	        GetSQLValueString($_REQUEST["wineID"], "int"),
+        	GetSQLValueString($_REQUEST["price"], "test"),
+		GetSQLValueString($_REQUEST["bottle_size"], "text"),
+		GetSQLValueString($_REQUEST["purchase_date"], "date"));
+
+        if ((GetSQLValueString($_REQUEST["event_comment"], "text")) != "NULL"){
+            $query_insert_bt = $query_insert_bt.$maxnum.", ";
+        }
+
+        $query_insert_bt= $query_insert_bt.sprintf("%s, %s, %s, %s)",
+		GetSQLValueString($_REQUEST["drink_start"], "int"),
+		GetSQLValueString($_REQUEST["drink_end"], "int"),
+		GetSQLValueString($_REQUEST["best_start"], "int"),
+		GetSQLValueString($_REQUEST["best_end"], "int")
+	);
+        echo $query_insert_bt;
+
+	$ok = mysql_query($query_insert_bt,$conn);
+
+	if (!$ok) {
+		return 1;
+	}else{
+                return 0;
 	}
 }
 
