@@ -64,6 +64,15 @@
 				edit_button.enabled=true;
 				printLabel_button.enabled=true;
 			}
+			
+			protected function disable_buttons():void
+			{
+				remove_button.enabled=false;
+				addAnother_button.enabled=false;
+				edit_button.enabled=false;
+				printLabel_button.enabled=false;
+			}
+			
 			protected function dg_itemClickHandler(event:ListEvent):void
 			{
 				currentState="Page2";
@@ -96,12 +105,12 @@
 	<fx:Declarations>
 		<mx:HTTPService 
 			id="wineService"
-			url="http://localhost:8888/wines.php"
+			url="http://localhost:80/wines.php"
 			resultFormat="e4x" fault="handleFault(event)"
 			useProxy="false"/>
 		<s:HTTPService
 			id="WineServiceChart"
-			url="http://localhost:8888/wines.php"
+			url="http://localhost:80/wines.php"
 			resultFormat="e4x" fault="handleFault(event)"
 			useProxy="false"/>
 		<mx:SeriesInterpolate id="interpolate" duration="500"/> 
@@ -269,13 +278,15 @@
 					</s:layout>
 					<s:Button id="cancel_button" label="Cancel"
 							  visible.Page2="false" visible.Page2_AddAnother="false"
-							  click.Page2_editable="currentState='Page2'"/>
+							  click.Page2_editable="currentState='Page2'; enable_buttons()"/>
 					<s:Button id="revert_button" label="Revert" label.Page2_AddAnother="Cancel" 
-							  visible.Page2="false" click.Page2_AddAnother="currentState='Page2'"
+							  visible.Page2="false" 
+							  click.Page2_AddAnother="currentState='Page2'; enable_buttons()"
 							  click.Page2_editable="currentState='Page2';currentState='Page2_editable'"/>
 					<s:Button id="save_button" label="Save" label.Page2_AddAnother="Add"
 							  visible.Page2="false"
-							  click.Page2_editable="updateWine();" click.Page2_AddAnother="AddAnotherBottle();"/>						
+							  click.Page2_editable="updateWine();enable_buttons()" 
+							  click.Page2_AddAnother="AddAnotherBottle(); "/>						
 				</s:SkinnableContainer>
 				
 			</s:SkinnableContainer>
