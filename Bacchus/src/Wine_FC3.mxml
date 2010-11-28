@@ -90,12 +90,12 @@
 	<fx:Declarations>
 		<mx:HTTPService 
 			id="wineService"
-			url="http://localhost:80/wines.php"
+			url="http://localhost:8888/wines.php"
 			resultFormat="e4x" fault="handleFault(event)"
 			useProxy="false"/>
 		<s:HTTPService
 			id="WineServiceChart"
-			url="http://localhost:80/wines.php"
+			url="http://localhost:8888/wines.php"
 			resultFormat="e4x" fault="handleFault(event)"
 			useProxy="false"/>
 		<mx:SeriesInterpolate id="interpolate" duration="500"/> 
@@ -124,7 +124,7 @@
 		<s:State name="Page3"/>
 		<s:State name="Page2_editable"/>
 	</s:states>
-	<s:Panel includeIn="Page2,Page2_editable" width="730" x="267" y="102" height="640">
+	<s:Panel includeIn="Page2,Page2_editable" width="730" y="102" height="640" horizontalCenter.Page2="0" horizontalCenter.Page2_editable="0" y.Page2_editable="100" y.Page2="100" height.Page2="640">
 		<s:SkinnableContainer x="10" y="10" width="708" height="587">
 			<s:layout>
 				<s:VerticalLayout gap="15" /> 
@@ -312,7 +312,7 @@
 		
 		
 	</fx:DesignLayer>
-	<s:Panel includeIn="Page2,Page2_editable" x="1004" y="101" width="247" height="390">
+	<s:Panel includeIn="Page2,Page2_editable" x="1004" y="101" width="247" height="390" width.Page2="250" x.Page2="1015" height.Page2="640" width.Page2_editable="250" x.Page2_editable="1015" height.Page2_editable="640" y.Page2_editable="100" y.Page2="100">
 		<s:SkinnableContainer id="rack_1" horizontalCenter="0.5" verticalCenter="0">
 			<s:layout>
 				<s:VerticalLayout />
@@ -355,11 +355,14 @@
 			</s:HGroup>
 		</s:SkinnableContainer>
 	</s:Panel>
-	<s:Panel includeIn="Page2,Page2_editable" width="130" height="607" x="130" y="101" >
-		<mx:Accordion x="0" y="-32" width="128" height="606" height.Page2="637">
-			<s:NavigatorContent label="Accordion Pane 1" width="100%" height="100%">
+	<s:Panel includeIn="Page2,Page2_editable" width="250" height="640" x="15" y="100">
+		<mx:Accordion x="-1" y="0" height="550" width="250">
+			<s:NavigatorContent label="Basic Search" width="100%" height="100%">
+			</s:NavigatorContent>
+			<s:NavigatorContent label="Advanced Search" width="100%" height="100%">
 			</s:NavigatorContent>
 		</mx:Accordion>
+		<s:Label includeIn="Page2,Page2_editable" x="10" y="568" text="Click above Acordian buttons to show search options" width="228" height="33" fontSize="14"/>
 	</s:Panel>
 	<mx:ViewStack id="vs1" includeIn="Page1" x="444.4" y="253.5" width="400" height="400">
 		<s:NavigatorContent label="View1" width="100%" height="100%">
