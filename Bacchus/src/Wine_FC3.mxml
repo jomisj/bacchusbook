@@ -57,7 +57,13 @@
 				currentState="Page2_editable";
 			}
 			
-			
+			protected function enable_buttons():void
+			{
+				remove_button.enabled=true;
+				addAnother_button.enabled=true;
+				edit_button.enabled=true;
+				printLabel_button.enabled=true;
+			}
 			protected function dg_itemClickHandler(event:ListEvent):void
 			{
 				currentState="Page2";
@@ -84,12 +90,12 @@
 	<fx:Declarations>
 		<mx:HTTPService 
 			id="wineService"
-			url="http://localhost:8888/wines.php"
+			url="http://localhost:80/wines.php"
 			resultFormat="e4x" fault="handleFault(event)"
 			useProxy="false"/>
 		<s:HTTPService
 			id="WineServiceChart"
-			url="http://localhost:8888/wines.php"
+			url="http://localhost:80/wines.php"
 			resultFormat="e4x" fault="handleFault(event)"
 			useProxy="false"/>
 		<mx:SeriesInterpolate id="interpolate" duration="500"/> 
@@ -126,7 +132,8 @@
 			
 			<mx:DataGrid id="dg" y="11.1" width="708" height="289" 
 						 dataProvider="{listData}" fontSize="12" x="10.2" editable="false" variableRowHeight="true" 
-						 itemClick.Page2_editable="dg_itemClickHandler(event)" selectedIndex="0">
+						 itemClick.Page2_editable="dg_itemClickHandler(event)"
+						 itemClick.Page2="enable_buttons()">
 				<mx:columns>
 					<mx:DataGridColumn dataField="wineID" headerText="WineID" visible="false"/>
 					<mx:DataGridColumn dataField="bottleID" headerText="BottleID" visible="false"/>
@@ -143,16 +150,16 @@
 						<s:TileLayout orientation="rows"/>
 					</s:layout>
 					<s:Button id="remove_button" label="Remove" 
-							  enabled.Page2="true"
+							  enabled.Page2="false"
 							  enabled.Page2_editable="false" click="remove_button_clickHandler(event)"/>
 					<s:Button id="edit_button" label="Edit" click="edit_button_clickHandler(event)" 
-							  enabled.Page2="true"
+							  enabled.Page2="false"
 							  enabled.Page2_editable="false"/>
 					<s:Button id="addAnother_button" label="Add Another" 
-							  enabled.Page2="true"
+							  enabled.Page2="false"
 							  enabled.Page2_editable="false"/>
 					<s:Button id="printLabel_button" label="Print Label" 
-							  enabled.Page2="true"
+							  enabled.Page2="false"
 							  enabled.Page2_editable="false"/>
 				</s:SkinnableContainer>
 				
