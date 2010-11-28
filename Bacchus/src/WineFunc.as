@@ -23,6 +23,7 @@ private var listData:XMLListCollection;
 private var dd1Data:XMLListCollection;
 
 public var removeRC:Boolean;
+public var removalComments:String;
 
 public function resultHandler(event:ResultEvent):void {
 	var result:XML = XML(event.result);  
@@ -116,6 +117,8 @@ public function removeBottle():void{
 	wineService.method = "GET";
 	params['method'] = "removeBottle";
 	params['bottleID'] = parseInt(dg.selectedItem.bottleID);
+	params['wineID']= parseInt(dg.selectedItem.wineID);
+	params['comments'] = removalComments;
 	wineService.cancel();
 	wineService.send(params);
 }

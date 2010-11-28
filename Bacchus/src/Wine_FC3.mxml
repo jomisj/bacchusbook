@@ -73,6 +73,7 @@
 			protected function remove_button_clickHandler(event:MouseEvent):void
 			{
 				removeRC = false;
+				removalComments = "";
 				var win:components.RemoveWindow = new components.RemoveWindow();
 				PopUpManager.addPopUp(win,this,true);
 				PopUpManager.centerPopUp(win);
@@ -240,10 +241,10 @@
 									 text.Page2="{dg.selectedItem.best_end}" editable="false" borderVisible="false" 
 									 text.Page2_editable="{dg.selectedItem.best_end}" contentBackgroundAlpha.Page2="0" borderVisible.Page2_editable="true" editable.Page2_editable="true"/>
 						<s:TextInput id="event_comment" fontSize="12" 
-									 text.Page2="{dg.selectedItem.comment}" editable="false" borderVisible="false" contentBackgroundAlpha.Page2="0" 
+									 text.Page2="{dg.selectedItem.comment}" editable="false" borderVisible="false" contentBackgroundAlpha.Page2="0" toolTip.Page2="{dg.selectedItem.comment}" 
 									 text.Page2_editable="{dg.selectedItem.comment}" borderVisible.Page2_editable="true" editable.Page2_editable="true"/>
 						<s:TextInput id="comments" fontSize="12" 
-									 text.Page2="{dg.selectedItem.comments}" editable="false" borderVisible="false" contentBackgroundAlpha.Page2="0" 
+									 text.Page2="{dg.selectedItem.comments}" editable="false" borderVisible="false" contentBackgroundAlpha.Page2="0" toolTip.Page2="{dg.selectedItem.comments}"  
 									 text.Page2_editable="{dg.selectedItem.comments}" borderVisible.Page2_editable="true" editable.Page2_editable="true"/>					
 					</s:SkinnableContainer>
 					

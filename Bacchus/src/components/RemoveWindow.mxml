@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
-	   layout="vertical" width="400" height="150"
+	   layout="vertical" width="400" height="300"
 	   title="Removal Confirmation" horizontalAlign="center" showCloseButton="true" close="closeWindow(event);" >	 
 
 	<mx:Script>
@@ -15,6 +15,7 @@
 			protected function button1_clickHandler(event:MouseEvent):void
 			{
 				parentApplication.removeRC = true;
+				parentApplication.removalComments = rComments.text;
 				parentApplication.removeBottle();
 				PopUpManager.removePopUp(this);
 			}
@@ -26,10 +27,13 @@
 			}
 		]]>
 	</mx:Script>
-	<mx:Canvas width="375" height="107" x="15">
+	<mx:Canvas width="375" height="254" x="15">
 		<mx:Label x="38" y="17" text="Please Confirm if you want to remove the selected Wine:"/>
 		<mx:Label x="38" y="45" text="{parentApplication.dg.selectedItem.wine_name}"/>
-		<mx:Button x="275" y="76" label="Remove" click="button1_clickHandler(event)"/>
-		<mx:Button x="197" y="76" label="Cancel" click="button2_clickHandler(event)"/>
+		<mx:Button x="275" y="224" label="Remove" click="button1_clickHandler(event)"/>
+		<mx:Button x="197" y="224" label="Cancel" click="button2_clickHandler(event)"/>
+		<mx:TextArea id="rComments" x="38" y="104" width="312" height="112" editable="true" text="{parentApplication.dg.selectedItem.comments}"/>
+		<mx:Label x="38" y="85" text="Removal Comments:"/>
+		<mx:HRule x="38" y="75" width="312"/>
 	</mx:Canvas>
 </mx:TitleWindow>
