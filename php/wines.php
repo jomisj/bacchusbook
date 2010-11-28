@@ -27,6 +27,10 @@ switch (@$_REQUEST["method"]) {
 		$serializer = new XmlSerializer();
 		echo $serializer->serialize($ret);
 		break;
+	case "removeBottle":
+		$ret = removeBottle();
+		echo $ret;
+		break;
 	case "InsertWine":
 		$ret = InsertWine();
 		echo $ret;
@@ -96,13 +100,32 @@ function FindAllWines() {
 	return array("data" => $toret);
 }
 
+
 function FindAllWines2() {
 	global $conn;
+
+        $query_recordset = "SELECT 
+                           B.bottleID, B.price, B. bottle_size, B.purchase_date, 
+                           B.removal_date, B.eventID, B.drink_start, B.drink_end, 
+                           B.best_start, B.best_end, B.comment, 
+                           A.wineID, A.wine_name, A.region, A.grape_type, 
+                           A.appelation, A.classification, A.color, 
+                           A.year, A.grading, A.comments 
+                           FROM 
+                           (SELECT bottles.*, event.comment FROM bottles 
+                           LEFT OUTER JOIN event 
+                           ON bottles.eventID = event.eventID) B 
+                           LEFT OUTER JOIN  
+                           characteristics A 
+                           ON B.wineID = A.wineID";
+
         if (intval($_REQUEST["YearParm"])==0)
         {
-            $query_recordset = "SELECT * FROM characteristics, bottles WHERE characteristics.wineID = bottles.wineID";
+             $query_recordset = $query_recordset . " WHERE B.removal_date IS NULL ORDER BY B.bottleID";
+
         }else {
-            $query_recordset = sprintf("SELECT * FROM characteristics, bottles WHERE characteristics.wineID = bottles.wineID and characteristics.year=%d",
+            $query_recordset = sprintf("%s WHERE A.year=%d AND B.removal_date IS NULL ORDER BY B.bottleID",
+                                $query_recordset,
                                 GetSQLValueString($_REQUEST["YearParm"], "int"));
         }
 	$recordset = mysql_query($query_recordset, $conn);
@@ -152,13 +175,11 @@ function updateWine() {
 
 	if (!$ok) {
 		return 1;
-		//exit("Unable to insert to DB: " . mysql_error());
 	}
 	else {
 		$ok = mysql_query($query_update_bt,$conn);
                 if (!$ok) {
                         return 1;
-                        //exit("Unable to insert to DB: " . mysql_error());
                 }
                 else {
                     return 0;
@@ -185,7 +206,6 @@ function InsertWine() {
 
 	if (!$ok) {
 		return 1;
-		//exit("Unable to insert to DB: " . mysql_error());
 	}
 	else {
 		return 0;
@@ -197,7 +217,7 @@ function InsertWine() {
 function chartGroupbyYear() {
 global $conn;
 
-	$query_recordset = "SELECT COUNT(*) as Num, A.year FROM (SELECT B.*, C.year FROM bottles B, characteristics C WHERE B.wineID = C.wineID) A GROUP BY A.year";
+	$query_recordset = "SELECT COUNT(*) as Num, A.year FROM (SELECT B.*, C.year FROM bottles B, characteristics C WHERE B.wineID = C.wineID and B.removal_date IS NULL) A GROUP BY A.year";
 	$recordset = mysql_query($query_recordset, $conn);
 	if (!$recordset) {
 		echo "Could not successfully run query ($query_recordset) from DB: " . mysql_error();
@@ -210,6 +230,37 @@ global $conn;
 	}
 
 	return array("data" => $toret);
+}
+
+function removeBottle() {
+global $conn;
+    $today = getdate();
+    $rem_date = sprintf("%u-%u-%u",$today[year],$today[mon],$today[mday]);
+
+    $query_update_bt = sprintf("UPDATE bottles SET removal_date='%s' WHERE bottleID = %u",
+		$rem_date,
+		GetSQLValueString($_REQUEST["bottleID"], "int")
+	);
+    $query_update_ch = sprintf("UPDATE characteristics SET comments = %s WHERE wineID=%u",
+                GetSQLValueString($_REQUEST["comments"], "text"),
+                GetSQLValueString($_REQUEST["wineID"], "int")
+        );
+
+    //echo $query_update_bt;
+    $ok = mysql_query($query_update_bt,$conn);
+
+	if (!$ok) {
+		return 1;
+	}
+	else {
+            $ok = mysql_query($query_update_ch,$conn);        
+            if (!$ok) {
+                    return 1;
+            }
+            else {            
+		return 0;
+            }
+	}
 }
 
 ?>
