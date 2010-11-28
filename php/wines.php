@@ -149,13 +149,19 @@ function FindAllWines2() {
 function updateWine() {
 	global $conn;
 
-        if ((GetSQLValueString($_REQUEST["eventID"], "int")) > 0)
+        echo "Event ID..........".GetSQLValueString($_REQUEST["eventID"],"int");
+        if (((GetSQLValueString($_REQUEST["eventID"], "int")) > 0))
         {
-                    $query_update_ev = sprintf("UPDATE event SET comment = %s  WHERE eventID=%u",
-                            GetSQLValueString($_REQUEST["event_comment"], "text"),
-                            GetSQLValueString($_REQUEST["eventID"], "int")
-                            );
-        } else {
+                $query_update_ev = sprintf("UPDATE event SET comment = %s  WHERE eventID=%u",
+                        GetSQLValueString($_REQUEST["event_comment"], "text"),
+                        GetSQLValueString($_REQUEST["eventID"], "int")
+                        );
+            echo $query_update_ev;
+            $ok = mysql_query($query_update_ev,$conn);
+            if (!$ok) {
+                    return 1;
+            }
+        } else if ((GetSQLValueString($_REQUEST["event_comment"], "text")) != "NULL") {
                     $query_event_max = "SELECT MAX(eventID) as MNUM FROM event";
                     $recordset = mysql_query($query_event_max,$conn);
                     $rs = mysql_fetch_assoc($recordset);
@@ -166,13 +172,14 @@ function updateWine() {
                             GetSQLValueString($_REQUEST["event_comment"], "text")
                             );
                     $_REQUEST["eventID"] = $maxnum;
+                    echo $query_update_ev;
+                    $ok = mysql_query($query_update_ev,$conn);
+                    if (!$ok) {
+                            return 1;
+                    }
         }
-        $ok = mysql_query($query_update_ev,$conn);
-        if (!$ok) {
-		return 1;
-	}
         
-        //echo "Event ID......".$_REQUEST["eventID"];
+        echo "Event ID......".$_REQUEST["eventID"];
 	$query_update_ch = sprintf("UPDATE characteristics SET wine_name = %s, region=%s, grape_type=%s, appelation=%s, classification=%s, color=%s, year=%s, grading=%u, comments=%s WHERE wineID=%u",
 		GetSQLValueString($_REQUEST["wine_name"], "text"),
 		GetSQLValueString($_REQUEST["region"], "text"),
@@ -185,8 +192,9 @@ function updateWine() {
 		GetSQLValueString($_REQUEST["comments"], "text"),
                 GetSQLValueString($_REQUEST["wineID"], "int")
 	);
+        //echo $query_update_ch;
         $query_update_bt = sprintf("UPDATE bottles SET price = %f, bottle_size=%s, purchase_date=%s, removal_date=%s, eventID=%u, drink_start=%u, drink_end=%u, best_start=%u, best_end=%u WHERE bottleID = %u",
-		GetSQLValueString($_REQUEST["price"], "text"),
+		GetSQLValueString($_REQUEST["price"], "test"),
 		GetSQLValueString($_REQUEST["bottle_size"], "text"),
 		GetSQLValueString($_REQUEST["purchase_date"], "date"),
 		GetSQLValueString($_REQUEST["removal_date"], "date"),
@@ -197,7 +205,44 @@ function updateWine() {
 		GetSQLValueString($_REQUEST["best_end"], "int"),
 		GetSQLValueString($_REQUEST["bottleID"], "int")
 	);
-        //echo $query_update_bt;
+
+        $query_update_bt = sprintf("UPDATE bottles SET price = %f, bottle_size=%s, purchase_date=%s, removal_date=%s, ",
+            	GetSQLValueString($_REQUEST["price"], "test"),
+		GetSQLValueString($_REQUEST["bottle_size"], "text"),
+		GetSQLValueString($_REQUEST["purchase_date"], "date"),
+		GetSQLValueString($_REQUEST["removal_date"], "date")
+                );
+
+
+        if ($maxnum > 0){
+        $query_update_bt = $query_update_bt . sprintf("eventID=%u, ",
+                GetSQLValueString($_REQUEST["eventID"], "int")  
+                );
+        }
+
+        $query_update_bt = $query_update_bt . sprintf("drink_start=%u, drink_end=%u, best_start=%u, best_end=%u WHERE bottleID = %u",
+		GetSQLValueString($_REQUEST["drink_start"], "int"),
+		GetSQLValueString($_REQUEST["drink_end"], "int"),
+		GetSQLValueString($_REQUEST["best_start"], "int"),
+		GetSQLValueString($_REQUEST["best_end"], "int"),
+		GetSQLValueString($_REQUEST["bottleID"], "int")
+	);
+
+    /*$query_update_bt = sprintf("UPDATE bottles SET price = %f, bottle_size=%s, purchase_date=%s, removal_date=%s, eventID=%u, drink_start=%u, drink_end=%u, best_start=%u, best_end=%u WHERE bottleID = %u",
+		GetSQLValueString($_REQUEST["price"], "test"),
+		GetSQLValueString($_REQUEST["bottle_size"], "text"),
+		GetSQLValueString($_REQUEST["purchase_date"], "date"),
+		GetSQLValueString($_REQUEST["removal_date"], "date"),
+                GetSQLValueString($_REQUEST["eventID"], "int"),
+		GetSQLValueString($_REQUEST["drink_start"], "int"),
+		GetSQLValueString($_REQUEST["drink_end"], "int"),
+		GetSQLValueString($_REQUEST["best_start"], "int"),
+		GetSQLValueString($_REQUEST["best_end"], "int"),
+		GetSQLValueString($_REQUEST["bottleID"], "int")
+	);*/
+
+
+        echo $query_update_bt;
 
 	$ok = mysql_query($query_update_ch,$conn);
 
