@@ -12,19 +12,19 @@
 	<fx:Script>
 		<![CDATA[
 			import components.ButtonBrowse_Pressed;
+			import components.RemoveWindow;
 			
 			import mx.collections.ArrayCollection;
 			import mx.events.DataGridEvent;
 			import mx.events.FlexEvent;
 			import mx.events.ListEvent;
 			import mx.events.StateChangeEvent;
+			import mx.managers.PopUpManager;
 			import mx.rpc.events.FaultEvent;
 			
 			import spark.events.DropDownEvent;
 			import spark.events.IndexChangeEvent;
 			include "WineFunc.as";
-			
-			
 			
 			private function handleFault(event:FaultEvent):void{
 				Alert.show(event.fault.faultString, "Error");
@@ -69,6 +69,15 @@
 				currentState="Page2"
 			}
 			
+
+			protected function remove_button_clickHandler(event:MouseEvent):void
+			{
+				removeRC = false;
+				var win:components.RemoveWindow = new components.RemoveWindow();
+				PopUpManager.addPopUp(win,this,true);
+				PopUpManager.centerPopUp(win);
+			}
+
 		]]>
 	</fx:Script>
 	<fx:Declarations>
@@ -116,15 +125,13 @@
 			
 			<mx:DataGrid id="dg" y="11.1" width="708" height="289" 
 						 dataProvider="{listData}" fontSize="12" x="10.2" editable="false" variableRowHeight="true" 
-						 itemClick.Page2_editable="dg_itemClickHandler(event)"  selectedIndex="0">
+						 itemClick.Page2_editable="dg_itemClickHandler(event)" selectedIndex="0">
 				<mx:columns>
 					<mx:DataGridColumn dataField="wineID" headerText="WineID" visible="false"/>
 					<mx:DataGridColumn dataField="bottleID" headerText="BottleID" visible="false"/>
 					<mx:DataGridColumn dataField="color" headerText="Color" width="100" wordWrap="true"/>
 					<mx:DataGridColumn dataField="wine_name" headerText="Wine Name" width="300" wordWrap="true"/>
-					<mx:DataGridColumn dataField="region" headerText="Region" width="200" wordWrap="true"/> 
-					<!--mx:DataGridColumn dataField="grape_type" headerText="Grape"/-->
-					
+					<mx:DataGridColumn dataField="region" headerText="Region" width="200" wordWrap="true"/> 					
 					<mx:DataGridColumn dataField="year" headerText="Year" width="50" wordWrap="true"/>
 				</mx:columns>
 			</mx:DataGrid>
@@ -136,7 +143,7 @@
 					</s:layout>
 					<s:Button id="remove_button" label="Remove" 
 							  enabled.Page2="true"
-							  enabled.Page2_editable="false"/>
+							  enabled.Page2_editable="false" click="remove_button_clickHandler(event)"/>
 					<s:Button id="edit_button" label="Edit" click="edit_button_clickHandler(event)" 
 							  enabled.Page2="true"
 							  enabled.Page2_editable="false"/>
@@ -272,8 +279,6 @@
 			</s:fill>
 		</s:Ellipse>
 		
-		<!--<s:Button skinClass="components.Button6" x="192" y="4" click.Page1="fill2()" click.Page2="chartByYear();currentState='Page1'" x.Page2="312" y.Page2="4" x.Page1="312" x.Page3="312"/>
-		<s:Button skinClass="components.Button7" x="278" y="4" x.Page2="398" y.Page2="4" x.Page1="398" x.Page3="398" visible="true"/>-->
 		<s:SkinnableContainer horizontalCenter="0.5" width="407">
 			<s:layout>
 				<s:HorizontalLayout/>
@@ -285,7 +290,7 @@
 			<s:Button skinClass.Page2="components.ButtonBrowse_Pressed"
 					  skinClass.Page2_editable="components.ButtonBrowse_Pressed"
 					  skinClass="components.ButtonBrowse" 
-					  click="fill2();currentState='Page2';"/>
+					  click="fill2();dg.selectedIndex=0;currentState='Page2';"/>
 			<s:Button skinClass="components.ButtonAdd" 
 					  click="currentState='Page2'"/>
 			<s:Button skinClass="components.ButtonMeal" 

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
+	   layout="vertical" width="400" height="150"
+	   title="Removal Confirmation" horizontalAlign="center" showCloseButton="true" close="closeWindow(event);" >	 
+
+	<mx:Script>
+		<![CDATA[
+			import mx.core.IFlexDisplayObject;
+			import mx.events.CloseEvent;
+			import mx.managers.PopUpManager;	 
+			private function closeWindow(e:CloseEvent):void {
+				PopUpManager.removePopUp(e.target as IFlexDisplayObject);
+			}
+			
+			protected function button1_clickHandler(event:MouseEvent):void
+			{
+				parentApplication.removeRC = true;
+				parentApplication.removeBottle();
+				PopUpManager.removePopUp(this);
+			}
+			
+			protected function button2_clickHandler(event:MouseEvent):void
+			{
+				parentApplication.removeRC = true;
+				PopUpManager.removePopUp(this);
+			}
+		]]>
+	</mx:Script>
+	<mx:Canvas width="375" height="107" x="15">
+		<mx:Label x="38" y="17" text="Please Confirm if you want to remove the selected Wine:"/>
+		<mx:Label x="38" y="45" text="{parentApplication.dg.selectedItem.wine_name}"/>
+		<mx:Button x="275" y="76" label="Remove" click="button1_clickHandler(event)"/>
+		<mx:Button x="197" y="76" label="Cancel" click="button2_clickHandler(event)"/>
+	</mx:Canvas>
+</mx:TitleWindow>

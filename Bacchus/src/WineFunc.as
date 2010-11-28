@@ -22,6 +22,8 @@ private var listData:XMLListCollection;
 [Bindable]
 private var dd1Data:XMLListCollection;
 
+public var removeRC:Boolean;
+
 public function resultHandler(event:ResultEvent):void {
 	var result:XML = XML(event.result);  
     var xmlList:XMLList = result.data.children();	
@@ -36,6 +38,16 @@ public function insertItemHandler(event:ResultEvent):void {
 	}
 	else {
 		Alert.show("Insert Failed!! Please retry.", "Alert Box", mx.controls.Alert.OK);
+	}
+}
+
+public function removeItemHandler(event:ResultEvent):void {	
+	var result:int = parseInt(String(event.result));  
+	if (result ==0){
+		fill2();
+	}
+	else {
+		Alert.show("Remove Failed!! Please retry.", "Alert Box", mx.controls.Alert.OK);
 	}
 }
 
@@ -84,6 +96,7 @@ public function fill2():void{
 	var params:Object = new Object();
 	wineService.removeEventListener(ResultEvent.RESULT,insertItemHandler);
 	wineService.removeEventListener(ResultEvent.RESULT,updateItemHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,removeItemHandler);
 	wineService.removeEventListener(ResultEvent.RESULT,WineServiceChart_resultHandler);
 	wineService.addEventListener(ResultEvent.RESULT,resultHandler);
 	wineService.method = "GET";
@@ -93,6 +106,20 @@ public function fill2():void{
 	wineService.send(params);
 	currentState='Page2';
 }
+
+public function removeBottle():void{
+	Alert.show("I selected remove","");
+	var params:Object = new Object();
+	wineService.removeEventListener(ResultEvent.RESULT,insertItemHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,updateItemHandler);
+	wineService.addEventListener(ResultEvent.RESULT,removeItemHandler);
+	wineService.method = "GET";
+	params['method'] = "removeBottle";
+	params['bottleID'] = parseInt(dg.selectedItem.bottleID);
+	wineService.cancel();
+	wineService.send(params);
+}
+
 /*
 public function insertWine():void{
 	wineService.removeEventListener(ResultEvent.RESULT,resultHandler);
