@@ -23,7 +23,7 @@
 		<s:fill>
 			<s:LinearGradient>
 				<s:entries>
-					<mx:GradientEntry color="0x999999"/>
+					<mx:GradientEntry color="#99ccff"/>
 				</s:entries>
 			</s:LinearGradient>
 		</s:fill>            

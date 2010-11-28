@@ -90,8 +90,8 @@ public function fill2():void{
 	wineService.send(params);
 	currentState='Page2';
 }
-
-/*public function insertWine():void{
+/*
+public function insertWine():void{
 	wineService.removeEventListener(ResultEvent.RESULT,resultHandler);
 	wineService.addEventListener(ResultEvent.RESULT,insertItemHandler);
 	wineService.method = "POST";
@@ -103,7 +103,21 @@ public function fill2():void{
 	wineService.cancel();
 	wineService.send(params);
 }
+*/
+public function updateWine():void{
+	wineService.removeEventListener(ResultEvent.RESULT,resultHandler);
+	wineService.addEventListener(ResultEvent.RESULT,insertItemHandler);
+	wineService.method = "POST";
+	params = {"method": "updateWine", "WineID": dg.selectedItem.wineID, "wine_name": wine_name.text,
+		"region": region.text, "grape_type": grape_type.text,
+		"appelation": appelation.text, "classification": classification.text,
+		"color": color.text, "year": year.text,
+		"grading": grading.text, "comments": comments.text}; 
+	wineService.cancel();
+	wineService.send(params);
+}
 
+/*
 private function clearInputFields():void{
 	inputWineName.text = "";
 	inputRegion.text = "";
