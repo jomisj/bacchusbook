@@ -113,11 +113,42 @@ function FindAllWines() {
 	return array("data" => $toret);
 }
 
-
+/**************************************************************************************
+                            SELECT 
+                            B.bottleID, B.price, B. bottle_size, B.purchase_date, 
+                            B.removal_date, B.eventID, B.drink_start, B.drink_end, 
+                            B.best_start, B.best_end, B.comment, 
+                            A.wineID, A.wine_name, A.region, A.grape_type, 
+                            A.appelation, A.classification, A.color, 
+                            A.year, A.grading, A.comments, B.locationID,
+                            B.rackID, B.row, B.col, B.rack_name,
+                            B.max_row, B.max_col
+                            FROM 
+                            (SELECT Y.*, E.comment
+                            FROM
+                            (SELECT Z.*, S.locationID,
+                            S.rackID, S.row, S.col, S.rack_name,
+                            S.max_row, S.max_col
+                            FROM bottles Z
+                            LEFT OUTER JOIN
+                            (SELECT L.*, R.rack_name,
+                            R.max_row, R.max_col
+                            FROM location L
+                            LEFT OUTER JOIN 
+                            racks R
+                            ON L.rackID = R.rackID) S
+                            ON S.bottleID = Z.bottleID) Y
+                            LEFT OUTER JOIN 
+                            event E
+                            ON E.eventID = Y.eventID ) B
+                            LEFT OUTER JOIN  
+                            characteristics A 
+                            ON B.wineID = A.wineID
+**************************************************************************************/
 function FindAllWines2() {
 	global $conn;
 
-        $query_recordset = "SELECT 
+        /*$query_recordset = "SELECT 
                            B.bottleID, B.price, B. bottle_size, B.purchase_date, 
                            B.removal_date, B.eventID, B.drink_start, B.drink_end, 
                            B.best_start, B.best_end, B.comment, 
@@ -130,7 +161,38 @@ function FindAllWines2() {
                            ON bottles.eventID = event.eventID) B 
                            LEFT OUTER JOIN  
                            characteristics A 
-                           ON B.wineID = A.wineID";
+                           ON B.wineID = A.wineID";*/
+
+        $query_recordset = "SELECT 
+                            B.bottleID, B.price, B. bottle_size, B.purchase_date, 
+                            B.removal_date, B.eventID, B.drink_start, B.drink_end, 
+                            B.best_start, B.best_end, B.comment, 
+                            A.wineID, A.wine_name, A.region, A.grape_type, 
+                            A.appelation, A.classification, A.color, 
+                            A.year, A.grading, A.comments, B.locationID,
+                            B.rackID, B.row, B.col, B.rack_name,
+                            B.max_row, B.max_col
+                            FROM 
+                            (SELECT Y.*, E.comment
+                            FROM
+                            (SELECT Z.*, S.locationID,
+                            S.rackID, S.row, S.col, S.rack_name,
+                            S.max_row, S.max_col
+                            FROM bottles Z
+                            LEFT OUTER JOIN
+                            (SELECT L.*, R.rack_name,
+                            R.max_row, R.max_col
+                            FROM location L
+                            LEFT OUTER JOIN 
+                            racks R
+                            ON L.rackID = R.rackID) S
+                            ON S.bottleID = Z.bottleID) Y
+                            LEFT OUTER JOIN 
+                            event E
+                            ON E.eventID = Y.eventID ) B
+                            LEFT OUTER JOIN  
+                            characteristics A 
+                            ON B.wineID = A.wineID";
 
         if (intval($_REQUEST["YearParm"])==0)
         {
