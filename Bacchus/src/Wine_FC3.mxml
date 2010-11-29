@@ -50,8 +50,6 @@
 				}
 			}
 			
-			
-			
 			protected function edit_button_clickHandler(event:MouseEvent):void
 			{
 				currentState="Page2_editable";
@@ -77,13 +75,11 @@
 			{
 				currentState="Page2";
 			}
-			
-			
+
 			protected function cancel_button_clickHandler(event:MouseEvent):void
 			{
 				currentState="Page2"
 			}
-			
 
 			protected function remove_button_clickHandler(event:MouseEvent):void
 			{
@@ -98,6 +94,74 @@
 			protected function addAnother_button_clickHandler(event:MouseEvent):void
 			{
 				currentState="Page2_AddAnother"
+			}
+
+
+			protected function clearWineAddFields():void{
+				inp_wnm.text = inp_reg.text = inp_col.text = inp_yr.text  = inp_gt.text = "";
+				inp_app.text = inp_cls.text = inp_grd.text = "";
+				inp_prc.text = inp_btsz.text = inp_pd.text = inp_ds.text = inp_de.text = "";
+				inp_bs.text = inp_be.text = inp_ecmnt.text = inp_cmt.text = "";
+			}
+			
+			protected function dd_wlist_changeHandler(event:IndexChangeEvent):void
+			{
+				clearWineAddFields();
+				inp_wnm.text = event.target.selectedItem.wine_name;
+				inp_reg.text = event.target.selectedItem.region;
+				inp_col.text = event.target.selectedItem.color;
+				inp_yr.text  = event.target.selectedItem.year;
+				inp_gt.text  = event.target.selectedItem.grape_type;
+				inp_app.text = event.target.selectedItem.appelation;
+				inp_cls.text = event.target.selectedItem.classification;
+				inp_grd.text = event.target.selectedItem.grading;
+				inp_cmt.text = event.target.selectedItem.comments;
+				arrWineDetail = new Array();
+				arrWineDetail.push(event.target.selectedItem.wineID);
+				arrWineDetail.push(inp_wnm.text);
+				arrWineDetail.push(inp_reg.text);
+				arrWineDetail.push(inp_col.text);
+				arrWineDetail.push(inp_yr.text);
+				arrWineDetail.push(inp_gt.text);
+				arrWineDetail.push(inp_app.text);
+				arrWineDetail.push(inp_cls.text);
+				arrWineDetail.push(inp_grd.text);
+				arrWineDetail.push(inp_cmt.text);
+			}
+
+
+			protected function p3_save_button_clickHandler(event:MouseEvent):void
+			{
+				var chInsertRequired:Boolean = new Boolean;
+				chInsertRequired = false;
+				
+				if((inp_wnm.text == "") || (inp_reg.text == "") ||
+					(inp_col.text == "") || (inp_yr.text == ""))
+					Alert.show("Please fill the mandatory field","Alert");
+				else{
+					if ((inp_wnm.text != arrWineDetail[1]) && (!chInsertRequired))
+						chInsertRequired = true;
+					if ((inp_reg.text != arrWineDetail[2]) && (!chInsertRequired))
+						chInsertRequired = true;
+					if ((inp_col.text != arrWineDetail[3]) && (!chInsertRequired))
+						chInsertRequired = true;
+					if ((inp_yr.text != arrWineDetail[4]) && (!chInsertRequired))
+						chInsertRequired = true;
+					if ((inp_gt.text != arrWineDetail[5]) && (!chInsertRequired))
+						chInsertRequired = true;
+					if ((inp_app.text != arrWineDetail[6]) && (!chInsertRequired))
+						chInsertRequired = true;
+					if ((inp_cls.text != arrWineDetail[7]) && (!chInsertRequired))
+						chInsertRequired = true;
+					if ((inp_grd.text != arrWineDetail[8]) && (!chInsertRequired))
+						chInsertRequired = true;
+					if ((inp_cmt.text != arrWineDetail[9]) && (!chInsertRequired))
+						chInsertRequired = true;
+					
+					/*if (chInsertRequired)
+						Alert.show("Changed","Alert");*/
+					addNewBottle(chInsertRequired);
+				}
 			}
 
 		]]>
@@ -306,47 +370,59 @@
 							  click.Page2_editable="updateWine();enable_buttons()" 
 							  click.Page2_AddAnother="AddAnotherBottle(); "/>						
 				</s:SkinnableContainer>
-				<s:DataGroup includeIn="Page3" width="696" height="34"/>
+				<s:Group includeIn="Page3" width="695" height="27">
+					<s:Label x="104" y="8" text="An existing Wine in Database:"/>
+					<s:DropDownList id="dd_wlist" x="273" y="3" width="249" dataProvider="{wineList}" labelField="wine_name" textAlign="left" change="dd_wlist_changeHandler(event)"></s:DropDownList>
+
+				</s:Group>
 				<s:Group includeIn="Page3" width="695" height="112">
 					<s:Label x="165" y="17" text="Wine Name:" width="100" textAlign="right"/>
 					<s:Label x="165" y="40" text="Region:" width="100" textAlign="right"/>
 					<s:Label x="165" y="65" text="Color:" width="100" textAlign="right"/>
 					<s:Label x="165" y="87" text="Year (YYYY):" width="100" textAlign="right"/>
-					<s:TextInput x="273" y="10" width="250" textAlign="left"/>
-					<s:TextInput x="273" y="34" width="250" textAlign="left"/>
-					<s:TextInput x="273" y="58" width="250" textAlign="left"/>
-					<s:TextInput x="273" y="82" width="250" textAlign="left"/>
+					<s:TextInput id="inp_wnm" x="273" y="10" width="250" textAlign="left"/>
+					<s:TextInput id="inp_reg" x="273" y="34" width="250" textAlign="left"/>
+					<s:TextInput id="inp_col" x="273" y="58" width="250" textAlign="left"/>
+					<s:TextInput id="inp_yr" x="273" y="82" width="250" textAlign="left"/>
 				</s:Group>
 				<s:Group includeIn="Page3" width="695" height="27">
 					<mx:HRule x="10" y="3" width="675"/>
 					<s:Label x="10" y="9" text="Optional Data: " width="149" textAlign="left"/>
 				</s:Group>
 				<s:Group includeIn="Page3" width="693" height="151" textAlign="right">
-					<s:Label x="9" y="9" text="Grape Type:" width="90"/>
-					<s:Label x="9" y="33" text="Appelation:" width="90"/>
-					<s:Label x="9" y="57" text="Classification:" width="90"/>
-					<s:Label x="9" y="81" text="Price:" width="90"/>
-					<s:Label x="9" y="105" text="Grading:" width="90"/>
-					<s:Label x="9" y="129" text="Bottle Size:" width="90"/>
-					<s:TextInput x="107" y="4" width="150" textAlign="left"/>
-					<s:TextInput x="107" y="28" width="150" textAlign="left"/>
-					<s:TextInput x="107" y="52" width="150" textAlign="left"/>
-					<s:TextInput x="107" y="76" width="150" textAlign="left"/>
-					<s:TextInput x="107" y="100" width="150" textAlign="left"/>
-					<s:TextInput x="107" y="124" width="150" textAlign="left"/>
-					<s:Label x="379" y="9" text="Purchase Date"/>
-					<s:Label x="398" y="33" text="Drink Start:"/>
-					<s:Label x="402" y="57" text="Drink End:"/>
-					<s:Label x="402" y="81" text="Best Start:"/>
-					<s:Label x="403" y="105" text="Best: End:"/>
-					<s:Label x="424" y="129" text="Event:" textAlign="left"/>
-					<s:TextInput x="464" y="4" width="150" textAlign="left"/>
-					<s:TextInput x="464" y="28" width="150" textAlign="left"/>
-					<s:TextInput x="464" y="52" width="150" textAlign="left"/>
-					<s:TextInput x="464" y="76" width="150" textAlign="left"/>
-					<s:TextInput x="464" y="100" width="150" textAlign="left"/>
-					<s:TextInput x="463" y="124" width="151" textAlign="left"/>
-					<mx:VRule x="346" y="10" height="131"/>
+					<s:Label x="-9" y="9" text="Grape Type:" width="90"/>
+					<s:Label x="-9" y="33" text="Appelation:" width="90"/>
+					<s:Label x="-9" y="57" text="Classification:" width="90"/>
+					<s:Label x="-9" y="81" text="Price:" width="90"/>
+					<s:Label x="-9" y="105" text="Grading:" width="90"/>
+					<s:Label x="-9" y="129" text="Bottle Size:" width="90"/>
+					<s:TextInput id="inp_gt" x="89" y="4" width="125" textAlign="left"/>
+					<s:TextInput id="inp_app" x="89" y="28" width="125" textAlign="left"/>
+					<s:TextInput id="inp_cls" x="89" y="52" width="125" textAlign="left"/>
+					<s:TextInput id="inp_prc" x="89" y="76" width="125" textAlign="left"/>
+					<s:TextInput id="inp_grd" x="89" y="100" width="125" textAlign="left"/>
+					<s:TextInput id="inp_btsz" x="89" y="124" width="125" textAlign="left"/>
+					<s:Label x="238" y="9" text="Purchase Date"/>
+					<s:Label x="257" y="33" text="Drink Start:"/>
+					<s:Label x="261" y="57" text="Drink End:"/>
+					<s:Label x="261" y="81" text="Best Start:"/>
+					<s:Label x="262" y="105" text="Best: End:"/>
+					<s:Label x="283" y="129" text="Event:" textAlign="left"/>
+					<s:TextInput id="inp_pd" x="325" y="4" width="125" textAlign="left"/>
+					<s:TextInput id="inp_ds" x="325" y="28" width="125" textAlign="left"/>
+					<s:TextInput id="inp_de" x="325" y="52" width="125" textAlign="left"/>
+					<s:TextInput id="inp_bs" x="325" y="76" width="125" textAlign="left"/>
+					<s:TextInput id="inp_be" x="325" y="100" width="125" textAlign="left"/>
+					<s:TextInput id="inp_ecmnt" x="325" y="124" width="125" textAlign="left"/>
+					<mx:VRule x="228" y="10" height="131"/>
+					<mx:VRule x="466" y="10" height="131"/>
+					<s:Label x="486" y="9" text="Location:"/>
+					<s:Label x="504" y="33" text="Rack:"/>
+					<s:Label x="507" y="57" text="Row:"/>
+					<s:Label x="490" y="81" text="Column:"/>
+					<s:DropDownList x="543" y="28" width="125"></s:DropDownList>
+					<s:DropDownList x="543" y="52" width="125"></s:DropDownList>
+					<s:DropDownList x="543" y="76" width="125"></s:DropDownList>
 				</s:Group>
 				<s:Group includeIn="Page3" width="693" height="22">
 					<mx:HRule x="37" y="9" width="597"/>
@@ -356,12 +432,11 @@
 					
 				</s:Group>
 				<s:Group includeIn="Page3" width="693" height="90">
-					<s:TextArea x="10" y="10" height="70" width="673"  textAlign="left"/>
+					<s:TextArea id="inp_cmt" x="10" y="10" height="70" width="673"  textAlign="left"/>
 				</s:Group>
 				<s:Group includeIn="Page3" width="692" height="75">
-					<s:Button id="p3_cancel_button" label="Cancel" x="456" y="0"/>
-					<s:Button id="p3_revert_button" label="Revert" label.Page2_AddAnother="Cancel" x="534" y="0"/>
-					<s:Button id="p3_save_button" label="Save" x="612" y="0"/>
+					<s:Button id="p3_revert_button" label="Reset" x="534" y="0" click="clearWineAddFields();loadWineList();currentState='Page3'"/>
+					<s:Button id="p3_save_button" label="Save" x="612" y="0" click="p3_save_button_clickHandler(event)"/>
 				</s:Group>
 			</s:SkinnableContainer>
 			
@@ -392,13 +467,11 @@
 					  skinClass="components.ButtonBrowse" 
 					  click="fill2();dg.selectedIndex=0;currentState='Page2';" skinClass.Page2_AddAnother="components.ButtonBrowse_Pressed"/>
 			<s:Button skinClass="components.ButtonAdd" skinClass.Page3="components.ButtonAdd_Pressed" 
-					  click="currentState='Page3'"/>
+					  click="loadWineList();currentState='Page3'"/>
 			<s:Button skinClass="components.ButtonMeal" 
-					  id="button4" 
-					  click="currentState='Page2'"/>
+					  id="button4"/>
 			<s:Button skinClass="components.ButtonAdvanced" 
-					  id="button5" 
-					  click="currentState='Page2'"/>
+					  id="button5"/>
 		</s:SkinnableContainer>
 		
 		
@@ -454,7 +527,7 @@
 			<s:NavigatorContent label="Advanced Search" width="100%" height="100%">
 			</s:NavigatorContent>
 		</mx:Accordion>
-		<s:Label x="10" y="568" text="Click above Acordian buttons to show search options" width="228" height="33" fontSize="14" includeIn="Page2,Page2_AddAnother,Page2_editable"/>
+		<s:Label x="10" y="568" text="Click above Acordian buttons to show search options" width="228" height="33" fontSize="14" includeIn="Page2,Page2_AddAnother,Page2_editable" textAlign="left"/>
 	</s:Panel>
 	<mx:ViewStack id="vs1" includeIn="Page1" x="444.4" y="253.5" width="400" height="400">
 		<s:NavigatorContent label="View1" width="100%" height="100%">
@@ -474,7 +547,7 @@
 		</s:NavigatorContent>
 	</mx:ViewStack>
 	<s:Label includeIn="Page1" x="315" y="166" text="Chart Type:" fontSize="12" height="21" verticalAlign="middle"/>
-	<s:DropDownList id="dd1" includeIn="Page1" x="385" y="166" dataProvider="{dd1Data}" labelField="@label" fontSize="12" change="dd1_changeHandler(event)"></s:DropDownList>
+	<s:DropDownList id="dd1" includeIn="Page1" x="385" y="166" dataProvider="{dd1Data}" labelField="@label" fontSize="12" change="dd1_changeHandler(event)"  textAlign="left"></s:DropDownList>
 	<s:Label includeIn="Page1" x="545" y="166" text="Category 1:" fontSize="12" height="21" verticalAlign="middle"/>
 	<s:DropDownList includeIn="Page1" x="615" y="166"></s:DropDownList>
 	<s:Label includeIn="Page1" x="775" y="166" text="Category 2:" fontSize="12" height="21" verticalAlign="middle"/>
