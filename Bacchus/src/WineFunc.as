@@ -124,6 +124,116 @@ public function loadWineList():void{
 	wineService.send(params);
 }
 
+public function searchRed():void{
+	var params:Object = new Object();
+	wineService.removeEventListener(ResultEvent.RESULT,insertItemHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,updateItemHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,removeItemHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,addAnotherItemHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,WineServiceChart_resultHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,loadWineListHandler);
+	wineService.addEventListener(ResultEvent.RESULT,resultHandler);
+	wineService.method = "GET";
+	params['method'] = "searchByColor";
+	params['color'] = "red";
+	params['YearParm']="0";
+	wineService.cancel();
+	wineService.send(params);
+	currentState='Page2';
+}
+
+public function searchForRose():void{
+	var params:Object = new Object();
+	wineService.removeEventListener(ResultEvent.RESULT,insertItemHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,updateItemHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,removeItemHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,addAnotherItemHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,WineServiceChart_resultHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,loadWineListHandler);
+	wineService.addEventListener(ResultEvent.RESULT,resultHandler);
+	wineService.method = "GET";
+	params['method'] = "searchByColor";
+	params['color'] = "rose";
+	params['YearParm']="0";
+	wineService.cancel();
+	wineService.send(params);
+	currentState='Page2';
+}
+
+public function searchForWhite():void{
+	var params:Object = new Object();
+	wineService.removeEventListener(ResultEvent.RESULT,insertItemHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,updateItemHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,removeItemHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,addAnotherItemHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,WineServiceChart_resultHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,loadWineListHandler);
+	wineService.addEventListener(ResultEvent.RESULT,resultHandler);
+	wineService.method = "GET";
+	params['method'] = "searchByColor";
+	params['color'] = "white";
+	params['YearParm']="0";
+	wineService.cancel();
+	wineService.send(params);
+	currentState='Page2';
+}
+
+
+
+public function searchForYoung():void{
+	var params:Object = new Object();
+	wineService.removeEventListener(ResultEvent.RESULT,insertItemHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,updateItemHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,removeItemHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,addAnotherItemHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,WineServiceChart_resultHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,loadWineListHandler);
+	wineService.addEventListener(ResultEvent.RESULT,resultHandler);
+	wineService.method = "GET";
+	params['method'] = "searchByAge";
+	params['age'] = "young";
+	params['YearParm']="0";
+	wineService.cancel();
+	wineService.send(params);
+	currentState='Page2';
+}
+
+public function searchForPrime():void{
+	var params:Object = new Object();
+	wineService.removeEventListener(ResultEvent.RESULT,insertItemHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,updateItemHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,removeItemHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,addAnotherItemHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,WineServiceChart_resultHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,loadWineListHandler);
+	wineService.addEventListener(ResultEvent.RESULT,resultHandler);
+	wineService.method = "GET";
+	params['method'] = "searchByAge";
+	params['age'] = "prime";
+	params['YearParm']="0";
+	wineService.cancel();
+	wineService.send(params);
+	currentState='Page2';
+}
+
+public function searchForOld():void{
+	var params:Object = new Object();
+	wineService.removeEventListener(ResultEvent.RESULT,insertItemHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,updateItemHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,removeItemHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,addAnotherItemHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,WineServiceChart_resultHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,loadWineListHandler);
+	wineService.addEventListener(ResultEvent.RESULT,resultHandler);
+	wineService.method = "GET";
+	params['method'] = "searchByAge";
+	params['age'] = "old";
+	params['YearParm']="0";
+	wineService.cancel();
+	wineService.send(params);
+	currentState='Page2';
+}
+
 public function fill2():void{
 	var params:Object = new Object();
 	wineService.removeEventListener(ResultEvent.RESULT,insertItemHandler);
@@ -135,11 +245,13 @@ public function fill2():void{
 	wineService.addEventListener(ResultEvent.RESULT,resultHandler);
 	wineService.method = "GET";
 	params['method'] = "FindAll2";
-	params['YearParm'] = "0";
+	params['YearParm']="0";
 	wineService.cancel();
 	wineService.send(params);
 	currentState='Page2';
 }
+
+
 
 public function removeBottle():void{
 	Alert.show("I selected remove","");
