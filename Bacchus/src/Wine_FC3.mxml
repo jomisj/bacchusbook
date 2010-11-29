@@ -527,24 +527,32 @@
 		</mx:Accordion>
 		<s:Label x="10" y="568" text="Click above Acordian buttons to show search options" width="228" height="33" fontSize="14" includeIn="Page2,Page2_AddAnother,Page2_editable" textAlign="left"/>
 	</s:Panel>
-	<mx:ViewStack id="vs1" includeIn="Page1" x="444.4" y="253.5" width="400" height="400">
+	
+	<mx:ViewStack id="vs1" includeIn="Page1" x="444.4" y="253.5" width="400" height="487">
 		<s:NavigatorContent label="View1" width="100%" height="100%">
-			<mx:PieChart x="110" y="0" id="piechart1" width="290" height="290" itemClick="piechart1_itemClickHandler(event)" dataProvider="{listData}" showDataTips="true">
+			<mx:PieChart x="110" y="0" id="piechart1" width="290" height="290" itemClick="piechart1_itemClickHandler(event)" dataProvider="{listData}" showDataTips="true" >
 				<mx:series>
 					<mx:PieSeries id="piechart1S1" displayName="Series 1" field="Num" nameField="year" showDataEffect="interpolate"/>
 				</mx:series>
 			</mx:PieChart>
 			<mx:Legend dataProvider="{piechart1}" width="110" height="290" x="0" y="0"/>
+			<s:Label x="91" y="310" text="Number of current Bottles against Year" fontSize="14" height="21" verticalAlign="middle"/>
 		</s:NavigatorContent>
 		<s:NavigatorContent label="View2" width="100%" height="100%">
 			<mx:LineChart x="0" y="0" id="linechart1" itemClick="piechart1_itemClickHandler(event)" dataProvider="{listData}" showDataTips="true">
+				<mx:verticalAxis>
+					<mx:LinearAxis title="Number of Bottles"/>
+				</mx:verticalAxis>
+				<mx:horizontalAxis>
+					<mx:CategoryAxis title="Year" categoryField="year"/>
+				</mx:horizontalAxis>
 				<mx:series>
 					<mx:LineSeries displayName="year" xField="year" yField="Num" showDataEffect="sslide"/>
 				</mx:series>
 			</mx:LineChart>
+			<s:Label x="93" y="406" text="Number of current Bottles against Year" fontSize="14" height="21" verticalAlign="middle"/>
 		</s:NavigatorContent>
 	</mx:ViewStack>
-	<s:Label includeIn="Page1" x="315" y="166" text="Chart Type:" fontSize="12" height="21" verticalAlign="middle"/>
 	<s:DropDownList id="dd1" includeIn="Page1" x="385" y="166" dataProvider="{dd1Data}" labelField="@label" fontSize="12" change="dd1_changeHandler(event)"  textAlign="left"></s:DropDownList>
 	<s:Label includeIn="Page1" x="545" y="166" text="Category 1:" fontSize="12" height="21" verticalAlign="middle"/>
 	<s:DropDownList includeIn="Page1" x="615" y="166"></s:DropDownList>
