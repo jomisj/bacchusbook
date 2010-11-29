@@ -525,8 +525,55 @@
 	<s:Panel includeIn="Page2,Page2_AddAnother,Page2_editable,Page3" width="250" height="640" x="15" y="100">
 		<mx:Accordion x="-1" y="0" height="550" width="250" includeIn="Page2,Page2_AddAnother,Page2_editable">
 			<s:NavigatorContent label="Basic Search" width="100%" height="100%">
+				
+				<s:VGroup includeIn="Page2, Page2_AddAnother, Page2_editable" x="8" y="10" width="230" height="475" gap="10" horizontalAlign="center">
+					<s:Button id="BasicSearch_Young" label="Young Wines" width="100"/>
+					<s:Button id="BasicSearch_Prime" label="Prime Wines" width="100"/>
+					<s:Button id="BasicSearch_Old" label="Old Wines" width="100"/>
+					<s:Button id="BasicSearch_Red" label="Red Wines" width="100"/>
+					<s:Button id="BasicSearch_White" label="White Wines" width="100"/>
+					<s:Button id="BasicSearch_Rose" label="Rose Wines" width="100"/>
+					
+				</s:VGroup>
 			</s:NavigatorContent>
 			<s:NavigatorContent label="Advanced Search" width="100%" height="100%">
+				<s:DropDownList width="228" id="AdvSearch_ColorChoice" prompt="Pick a Color"  x="10" y="14">
+					<s:dataProvider>
+						<s:ArrayList source="[Red, Rose, White]" />
+					</s:dataProvider>
+				</s:DropDownList>
+				<s:DropDownList x="10" y="39" width="228" id="AdvSearch_TypeList" prompt="Pick a Type of Wine"></s:DropDownList>
+				<s:Label  text="Search" x="10" y="150"/>
+				<s:DropDownList  prompt="This Category" width="183" id="AdvSearch_cat1" x="55" y="143"></s:DropDownList>
+				<s:Label  text="For"  x="10" y="178"/>
+				<s:ComboBox id="AdvSearch_arg1" width="207" x="31" y="172"/>
+				<s:Label text="Search" x="9" y="220"/>
+				<s:DropDownList width="181" id="AdvSearch_cat2" prompt="This Category" x="57" y="212"></s:DropDownList>
+				<s:Label text="For" x="10" y="248"/>
+				<s:Label  text="For" x="10" y="248"/>
+				<s:ComboBox width="199" id="advSearch_arg2" width.Page2="205" x.Page2="33" x="39" y="241" />
+				<s:Label  text="Search" x="10" y="281"/>
+				<s:DropDownList id="advSearch_cat3" prompt="This Category" x="58" y="274" ></s:DropDownList>
+				<s:Label text="For" x="9" y="306" />
+				<s:ComboBox width="201" id="advSearch_arg3" x="38" y="302"/>
+				<s:Button label="Update" x="168" y="339"/>
+				<s:CheckBox x="10" y="71" id="AdvSearch_IncludeYoung" label="Include Young Wines"/>
+				<s:CheckBox id="AdvSearch_IncludePrime" label="Include Prime Wines" x="10" y="93"/>
+				<s:CheckBox x="10" y="115" id="AdvSearch_IncludeOld" label="Include Old Wines"/>
+				
+			</s:NavigatorContent>
+			<s:NavigatorContent label="Match a Wine to a Meal" width="100%" height="100%">
+				<s:Label text="Select A Meal:" x.Page2="10" y.Page2="10" x.Page2_AddAnother="10" y.Page2_AddAnother="16" fontSize.Page2_AddAnother="16"/>
+				<s:DropDownList id="mealSelect" prompt="Select A Meal"  x.Page2="10" y.Page2="26" width.Page2="228" x.Page2_AddAnother="10" y.Page2_AddAnother="36" width.Page2_AddAnother="229"/>
+				<s:Button id="mealUpdate" label="Update"  x.Page2="168" y.Page2="55" x.Page2_AddAnother="168" y.Page2_AddAnother="66"/>
+				<s:Label text="Add A Suggestion"  x.Page2="10" y.Page2="108" x.Page2_AddAnother="10" y.Page2_AddAnother="108" text.Page2_AddAnother="Add A Suggestion:" fontSize.Page2_AddAnother="16"/>
+				<s:ComboBox id="mealAddMeal"  x.Page2="10" y.Page2="141" width.Page2="229" x.Page2_AddAnother="10" y.Page2_AddAnother="148" width.Page2_AddAnother="229"/>
+				<s:ComboBox id="mealAddWine"  x.Page2="10" y.Page2="192" width.Page2="228" x.Page2_AddAnother="9" y.Page2_AddAnother="198" width.Page2_AddAnother="228"/>
+				<s:Label includeIn="Page2" x="10" y="126" text="With this meal:"/>
+				<s:Label includeIn="Page2" x="10" y="173" text="Suggest this wine:"/>
+				<s:Button x="168" y="227" label="Button" id="MealAddButton" label.Page2="Add" x.Page2="168" y.Page2="223"/>
+				<s:Label includeIn="Page2_AddAnother" x="10" y="131" text="Suggest This Wine"/>
+				<s:Label includeIn="Page2_AddAnother" x="10" y="181" text="With This Meal"/>
 			</s:NavigatorContent>
 		</mx:Accordion>
 		<s:Label x="10" y="568" text="Click above Acordian buttons to show search options" width="228" height="33" fontSize="14" includeIn="Page2,Page2_AddAnother,Page2_editable" textAlign="left"/>
