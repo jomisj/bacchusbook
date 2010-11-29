@@ -447,7 +447,7 @@
 	</s:Panel>
 	
 	<fx:DesignLayer d:userLabel="Layer 1">
-		<s:Ellipse alpha="0.24" height="219" width="730"  horizontalCenter="0.5" top="-130.5">
+		<s:Ellipse alpha="0.24" height="219" width="600"  horizontalCenter="0.5" top="-130.5">
 			<s:stroke>
 				<s:SolidColorStroke caps="none" color="#5380D0" joints="miter" miterLimit="4" weight="1"/>
 			</s:stroke>
@@ -458,7 +458,7 @@
 		
 		<s:SkinnableContainer horizontalCenter="0.5" width="407">
 			<s:layout>
-				<s:HorizontalLayout/>
+				<s:HorizontalLayout horizontalAlign="center"/>
 			</s:layout>
 			<s:Button skinClass="components.ButtonStats"
 					  skinClass.Page1="components.ButtonStats_Pressed"
@@ -470,8 +470,6 @@
 					  click="fill2();dg.selectedIndex=0;currentState='Page2';" skinClass.Page2_AddAnother="components.ButtonBrowse_Pressed"/>
 			<s:Button skinClass="components.ButtonAdd" skinClass.Page3="components.ButtonAdd_Pressed" 
 					  click="loadWineList();currentState='Page3'"/>
-			<s:Button skinClass="components.ButtonMeal" 
-					  id="button4"/>
 			<s:Button skinClass="components.ButtonAdvanced" 
 					  id="button5"/>
 		</s:SkinnableContainer>
