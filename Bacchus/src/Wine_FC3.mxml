@@ -519,6 +519,9 @@
 				<s:Button id="R14" skinClass="components.WineLocation"/>				
 			</s:HGroup>
 		</s:SkinnableContainer>
+		<s:DropDownList x="34" y="123" width="182" id="rackSelection" selectedIndex="0">
+			<s:ArrayList source="[Rack 1, Rack 2, Rack 3]" />		
+		</s:DropDownList>
 	</s:Panel>
 	<s:Panel includeIn="Page2,Page2_AddAnother,Page2_editable,Page3" width="250" height="640" x="15" y="100">
 		<mx:Accordion x="-1" y="0" height="550" width="250" includeIn="Page2,Page2_AddAnother,Page2_editable" height.Page2="607">
