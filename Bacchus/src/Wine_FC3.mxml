@@ -563,20 +563,18 @@
 				<s:CheckBox x="10" y="71" id="AdvSearch_IncludeYoung" label="Include Young Wines"/>
 				<s:CheckBox id="AdvSearch_IncludePrime" label="Include Prime Wines" x="10" y="93"/>
 				<s:CheckBox x="10" y="115" id="AdvSearch_IncludeOld" label="Include Old Wines"/>
-				
 			</s:NavigatorContent>
+			
 			<s:NavigatorContent label="Match a Wine to a Meal" width="100%" height="100%">
-				<s:Label text="Select A Meal:" x.Page2="10" y.Page2="10" x.Page2_AddAnother="10" y.Page2_AddAnother="16" fontSize.Page2_AddAnother="16"/>
-				<s:DropDownList id="mealSelect" prompt="Select A Meal"  x.Page2="10" y.Page2="26" width.Page2="228" x.Page2_AddAnother="10" y.Page2_AddAnother="36" width.Page2_AddAnother="229"/>
-				<s:Button id="mealUpdate" label="Update"  x.Page2="168" y.Page2="55" x.Page2_AddAnother="168" y.Page2_AddAnother="66"/>
-				<s:Label text="Add A Suggestion"  x.Page2="10" y.Page2="108" x.Page2_AddAnother="10" y.Page2_AddAnother="108" text.Page2_AddAnother="Add A Suggestion:" fontSize.Page2_AddAnother="16"/>
-				<s:ComboBox id="mealAddMeal"  x.Page2="10" y.Page2="141" width.Page2="229" x.Page2_AddAnother="10" y.Page2_AddAnother="148" width.Page2_AddAnother="229"/>
-				<s:ComboBox id="mealAddWine"  x.Page2="10" y.Page2="192" width.Page2="228" x.Page2_AddAnother="9" y.Page2_AddAnother="198" width.Page2_AddAnother="228"/>
-				<s:Label includeIn="Page2" x="10" y="126" text="With this meal:"/>
-				<s:Label includeIn="Page2" x="10" y="173" text="Suggest this wine:"/>
-				<s:Button x="168" y="227" label="Button" id="MealAddButton" label.Page2="Add" x.Page2="168" y.Page2="223"/>
-				<s:Label includeIn="Page2_AddAnother" x="10" y="131" text="Suggest This Wine"/>
-				<s:Label includeIn="Page2_AddAnother" x="10" y="181" text="With This Meal"/>
+				<s:Label text="Select A Meal:" fontSize="16" x="10" y="9"/>
+				<s:DropDownList id="mealSelect" prompt="Select A Meal"  x="10" y="26" width="228"/>
+				<s:Button id="mealUpdate" label="Update" x="168" y="54"/>
+				<s:Label text="Add A Suggestion:"  x="10" y="108" fontSize="16"/>
+				<s:ComboBox id="mealAddMeal" x="10" y="148" width="229"/>
+				<s:ComboBox id="mealAddWine" x="9" y="198" width="228"/>
+				<s:Button x="168" y="227" label="Add" id="MealAddButton"/>
+				<s:Label x="10" y="131" text="Suggest This Wine"/>
+				<s:Label x="10" y="181" text="With This Meal"/>
 			</s:NavigatorContent>
 		</mx:Accordion>
 		<s:Label x="10" y="568" text="Click above Acordian buttons to show search options" width="228" height="33" fontSize="14" includeIn="Page2_AddAnother,Page2_editable" textAlign="left"/>
