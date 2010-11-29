@@ -166,12 +166,12 @@
 	<fx:Declarations>
 		<mx:HTTPService 
 			id="wineService"
-			url="http://localhost:8888/wines.php"
+			url="http://localhost:80/wines.php"
 			resultFormat="e4x" fault="handleFault(event)"
 			useProxy="false"/>
 		<s:HTTPService
 			id="WineServiceChart"
-			url="http://localhost:8888/wines.php"
+			url="http://localhost:80/wines.php"
 			resultFormat="e4x" fault="handleFault(event)"
 			useProxy="false"/>
 		<mx:SeriesInterpolate id="interpolate" duration="500"/> 
@@ -232,6 +232,7 @@
 							  enabled.Page2="false"
 							  enabled.Page2_editable="false" enabled.Page2_AddAnother="false"/>
 					<s:Button id="addAnother_button" label="Add Another" click="addAnother_button_clickHandler(event)" 
+							  toolTip="Add another bottle to your wine collection based on this wine information. You can make changes before adding."
 							  enabled.Page2="false"
 							  enabled.Page2_editable="false" enabled.Page2_AddAnother="false"/>
 					<s:Button id="printLabel_button" label="Print Label" 
@@ -462,27 +463,31 @@
 			</s:layout>
 			<s:Button skinClass="components.ButtonStats"
 					  skinClass.Page1="components.ButtonStats_Pressed"
+					  toolTip="Get statistics on the content of your wine collection, your budget, your drinking habits..."
 					  click="chartByYear();
 					  currentState='Page1'" />
 			<s:Button skinClass.Page2="components.ButtonBrowse_Pressed"
 					  skinClass.Page2_editable="components.ButtonBrowse_Pressed"
 					  skinClass="components.ButtonBrowse" 
+					  toolTip="Browse and search through your collection, remove a wine, or get meal-wine pairings"
 					  click="fill2();dg.selectedIndex=0;currentState='Page2';" skinClass.Page2_AddAnother="components.ButtonBrowse_Pressed"/>
-			<s:Button skinClass="components.ButtonAdd" skinClass.Page3="components.ButtonAdd_Pressed" 
+			<s:Button skinClass="components.ButtonAdd" skinClass.Page3="components.ButtonAdd_Pressed"
+					  toolTip="Add another bottle to your wine collection"
 					  click="loadWineList();currentState='Page3'"/>
-			<s:Button skinClass="components.ButtonAdvanced" 
+			<s:Button skinClass="components.ButtonAdvanced"
+					  toolTip="Advanced functionality: reconfigure your cellar, manage exports/imports... (Not implemented)"
 					  id="button5"/>
 		</s:SkinnableContainer>
 		
 		
 		
 	</fx:DesignLayer>
-	<s:Panel includeIn="Page2,Page2_AddAnother,Page2_editable,Page3" width.Page2="250" x.Page2="1015" height.Page2="640" width.Page2_editable="250" x.Page2_editable="1015" height.Page2_editable="640" y.Page2_editable="100" y.Page2="100" height.Page2_AddAnother="640" width.Page2_AddAnother="250" x.Page2_AddAnother="1015" y.Page2_AddAnother="100" height.Page3="640" width.Page3="250" x.Page3="1015" y.Page3="100">
+	<s:Panel toolTip="Not working yet!" includeIn="Page2,Page2_AddAnother,Page2_editable,Page3" width.Page2="250" x.Page2="1015" height.Page2="640" width.Page2_editable="250" x.Page2_editable="1015" height.Page2_editable="640" y.Page2_editable="100" y.Page2="100" height.Page2_AddAnother="640" width.Page2_AddAnother="250" x.Page2_AddAnother="1015" y.Page2_AddAnother="100" height.Page3="640" width.Page3="250" x.Page3="1015" y.Page3="100">
 		<s:SkinnableContainer id="rack_1" horizontalCenter="0.5" verticalCenter="0">
 			<s:layout>
 				<s:VerticalLayout />
 			</s:layout>
-			<s:HGroup >
+			<s:HGroup toolTip="Not working yet!!">
 				<s:Button id="R61" skinClass="components.WineLocation"/>
 				<s:Button id="R62" skinClass="components.WineLocation"/>
 				<s:Button id="R63" skinClass="components.WineLocation"/>
