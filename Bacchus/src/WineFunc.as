@@ -48,7 +48,6 @@ public function removeItemHandler(event:ResultEvent):void {
 
 public function updateItemHandler(event:ResultEvent):void {	
 	var result:int = parseInt(String(event.result));
-	//var result:int = 1;
 	if (result ==0){
 		fill2();
 	}
@@ -79,8 +78,6 @@ public function loadWineListHandler(event:ResultEvent):void {
 	var xmlList:XMLList = result.data.children();
 	var emptyXmlList:XMLList = new XMLList;
 	wineList = new XMLListCollection;
-	//wineList.addItemAt(emptyXmlList,0);
-	//wineList.addItem(xmlList);
 	wineList = new XMLListCollection(xmlList); 
 }
 
@@ -178,20 +175,6 @@ public function AddAnotherBottle():void {
 	wineService.send(params);	
 }
 
-/*
-public function insertWine():void{
-	wineService.removeEventListener(ResultEvent.RESULT,resultHandler);
-	wineService.addEventListener(ResultEvent.RESULT,insertItemHandler);
-	wineService.method = "POST";
-    params = {"method": "InsertWine", "WineID": NaN, "wine_name": inputWineName.text,
-    			 "region": inputRegion.text, "grape_type": inputGrape.text,
-				 "appelation": inputAppelation.text, "classification": inputClassification.text,
-				 "color": inputColor.text, "year": inputYear.text,
-				 "grading": inputGrading.text, "comments": inputComments.text}; 
-	wineService.cancel();
-	wineService.send(params);
-}
-*/
 public function updateWine():void{
 	var params:Object = new Object();
 	wineService.removeEventListener(ResultEvent.RESULT,resultHandler);

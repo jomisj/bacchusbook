@@ -158,8 +158,6 @@
 					if ((inp_cmt.text != arrWineDetail[9]) && (!chInsertRequired))
 						chInsertRequired = true;
 					
-					/*if (chInsertRequired)
-						Alert.show("Changed","Alert");*/
 					addNewBottle(chInsertRequired);
 				}
 			}
