@@ -528,12 +528,14 @@
 			<s:NavigatorContent label="Basic Search" width="100%" height="100%">
 				
 				<s:VGroup includeIn="Page2, Page2_AddAnother, Page2_editable" x="8" y="10" width="230" height="475" gap="10" horizontalAlign="center">
-					<s:Button id="BasicSearch_Young" label="Young Wines" width="100"/>
-					<s:Button id="BasicSearch_Prime" label="Prime Wines" width="100"/>
-					<s:Button id="BasicSearch_Old" label="Old Wines" width="100"/>
-					<s:Button id="BasicSearch_Red" label="Red Wines" width="100"/>
-					<s:Button id="BasicSearch_White" label="White Wines" width="100"/>
-					<s:Button id="BasicSearch_Rose" label="Rose Wines" width="100"/>
+					<s:Label text="Search By Age"  fontWeight.Page2="normal" fontSize.Page2="16"/>
+					<s:Button id="BasicSearch_Young" label="Young Wines" width="100"  click="searchForYoung()"/>
+					<s:Button id="BasicSearch_Prime" label="Prime Wines" width="100" click="searchForPrime()"/>
+					<s:Button id="BasicSearch_Old" label="Old Wines" width="100" click="searchForOld()"/>
+					<s:Label text="Label" text.Page2="Search By Color" fontSize.Page2="16"/>
+					<s:Button id="BasicSearch_Red" label="Red Wines" width="100" click="searchForRed()"/>
+					<s:Button id="BasicSearch_White" label="White Wines" width="100" click="searchForWhite()"/>
+					<s:Button id="BasicSearch_Rose" label="Rose Wines" width="100" click="searchForRose()"/>
 					
 				</s:VGroup>
 			</s:NavigatorContent>

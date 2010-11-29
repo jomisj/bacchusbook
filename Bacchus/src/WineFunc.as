@@ -124,7 +124,7 @@ public function loadWineList():void{
 	wineService.send(params);
 }
 
-public function searchRed():void{
+public function searchForRed():void{
 	var params:Object = new Object();
 	wineService.removeEventListener(ResultEvent.RESULT,insertItemHandler);
 	wineService.removeEventListener(ResultEvent.RESULT,updateItemHandler);
