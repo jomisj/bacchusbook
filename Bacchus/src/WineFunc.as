@@ -12,6 +12,13 @@ private var listData:XMLListCollection;
 private var dd1Data:XMLListCollection;
 [Bindable]
 private var wineList:XMLListCollection;
+[Bindable]
+
+private var rackList:XMLListCollection;
+[Bindable]
+private var rowList:XMLListCollection;
+[Bindable]
+private var colList:XMLListCollection;
 
 public var removeRC:Boolean;
 public var removalComments:String;

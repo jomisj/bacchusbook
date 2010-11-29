@@ -128,8 +128,7 @@
 				arrWineDetail.push(inp_grd.text);
 				arrWineDetail.push(inp_cmt.text);
 			}
-
-
+			
 			protected function p3_save_button_clickHandler(event:MouseEvent):void
 			{
 				var chInsertRequired:Boolean = new Boolean;
@@ -189,8 +188,7 @@
 				<menuitem label="Category 2 : 3"/>
 			</chType>
 			
-		</fx:XMLList>
-		
+		</fx:XMLList>		
 		
 	</fx:Declarations>
 	
@@ -292,6 +290,9 @@
 						<s:Label text="Bottle Size" fontSize="12" height="13"/>
 						<s:Label text="Purchase Date" fontSize="12" height="13"/>
 						<s:Label text="Removal Date" fontSize="12" height="13"/>
+						<s:Label text="Location" fontSize="12" height="13"/>
+						<s:Label text="Row" fontSize="12" height="13"/>
+						<s:Label text="Column" fontSize="12" height="13"/>
 					</s:SkinnableContainer>
 					<s:SkinnableContainer skinClass="mySkins.Fields" width="140" textAlign="left">
 						<s:TextInput id="price" fontSize="12" 
@@ -314,6 +315,9 @@
 									 text.Page2="{dg.selectedItem.removal_date}" editable="false" borderVisible="false" contentBackgroundAlpha.Page2="0" 
 									 text.Page2_editable="{dg.selectedItem.removal_date}" borderVisible.Page2_editable="true" editable.Page2_editable="true" borderVisible.Page2_AddAnother="true" editable.Page2_AddAnother="true" text.Page2_AddAnother="{dg.selectedItem.removal_date}" 
 />
+						<s:DropDownList id="rack" width="125" enabled.Page2="false" dataProvider="{rackList}" selectedIndex.Page2="0"></s:DropDownList>
+						<s:DropDownList id="row" width="125" enabled.Page2="false" dataProvider="{rowList}" selectedIndex.Page2="0"></s:DropDownList>
+						<s:DropDownList id="column" width="125" enabled.Page2="false" dataProvider="{colList}" selectedIndex.Page2="0"></s:DropDownList>
 					</s:SkinnableContainer>
 					<s:SkinnableContainer skinClass="mySkins.Labels">
 						<s:Label text="Drink Start" fontSize="12" height="12"/>
