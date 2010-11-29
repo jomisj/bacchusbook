@@ -521,7 +521,7 @@
 		</s:SkinnableContainer>
 	</s:Panel>
 	<s:Panel includeIn="Page2,Page2_AddAnother,Page2_editable,Page3" width="250" height="640" x="15" y="100">
-		<mx:Accordion x="-1" y="0" height="550" width="250" includeIn="Page2,Page2_AddAnother,Page2_editable">
+		<mx:Accordion x="-1" y="0" height="550" width="250" includeIn="Page2,Page2_AddAnother,Page2_editable" height.Page2="607">
 			<s:NavigatorContent label="Basic Search" width="100%" height="100%">
 				
 				<s:VGroup includeIn="Page2, Page2_AddAnother, Page2_editable" x="8" y="10" width="230" height="475" gap="10" horizontalAlign="center">
@@ -574,7 +574,7 @@
 				<s:Label includeIn="Page2_AddAnother" x="10" y="181" text="With This Meal"/>
 			</s:NavigatorContent>
 		</mx:Accordion>
-		<s:Label x="10" y="568" text="Click above Acordian buttons to show search options" width="228" height="33" fontSize="14" includeIn="Page2,Page2_AddAnother,Page2_editable" textAlign="left"/>
+		<s:Label x="10" y="568" text="Click above Acordian buttons to show search options" width="228" height="33" fontSize="14" includeIn="Page2_AddAnother,Page2_editable" textAlign="left"/>
 	</s:Panel>
 	
 	<mx:ViewStack id="vs1" includeIn="Page1" x="444.4" y="253.5" width="400" height="487">
