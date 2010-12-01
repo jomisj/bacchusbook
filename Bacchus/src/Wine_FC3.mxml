@@ -24,6 +24,7 @@
 			
 			import spark.events.DropDownEvent;
 			import spark.events.IndexChangeEvent;
+			import mx.effects.easing.Exponential;
 			include "WineFunc.as";
 			
 			private function handleFault(event:FaultEvent):void{
@@ -52,6 +53,7 @@
 			
 			protected function edit_button_clickHandler(event:MouseEvent):void
 			{
+				loadRackList();
 				currentState="Page2_editable";
 			}
 			
@@ -166,12 +168,12 @@
 	<fx:Declarations>
 		<mx:HTTPService 
 			id="wineService"
-			url="http://localhost:8888/wines.php"
+			url="http://localhost:80/wines.php"
 			resultFormat="e4x" fault="handleFault(event)"
 			useProxy="false"/>
 		<s:HTTPService
 			id="WineServiceChart"
-			url="http://localhost:8888/wines.php"
+			url="http://localhost:80/wines.php"
 			resultFormat="e4x" fault="handleFault(event)"
 			useProxy="false"/>
 		<mx:SeriesInterpolate id="interpolate" duration="500"/> 
@@ -287,6 +289,7 @@
 					</s:SkinnableContainer>
 					
 					<s:SkinnableContainer skinClass="mySkins.Labels" includeIn="Page2,Page2_AddAnother,Page2_editable">
+						<s:Label text="pipo"/>
 						<s:Label text="Price" fontSize="12" height="13"/>
 						<s:Label text="Grading" fontSize="12" height="13"/>
 						<s:Label text="Bottle Size" fontSize="12" height="13"/>
@@ -299,27 +302,44 @@
 					<s:SkinnableContainer skinClass="mySkins.Fields" width="140" textAlign="left" includeIn="Page2,Page2_AddAnother,Page2_editable">
 						<s:TextInput id="price" fontSize="12" 
 									 text.Page2="{dg.selectedItem.price}" editable="false" borderVisible="false" contentBackgroundAlpha.Page2="0" 
-									 text.Page2_editable="{dg.selectedItem.price}" borderVisible.Page2_editable="true" editable.Page2_editable="true" borderVisible.Page2_AddAnother="true" editable.Page2_AddAnother="true" text.Page2_AddAnother="{dg.selectedItem.price}" 
+									 text.Page2_editable="{dg.selectedItem.price}" borderVisible.Page2_editable="true" editable.Page2_editable="true" 
+									 borderVisible.Page2_AddAnother="true" editable.Page2_AddAnother="true" text.Page2_AddAnother="{dg.selectedItem.price}" 
 />
 						<s:TextInput id="grading" fontSize="12" 
 									 text.Page2="{dg.selectedItem.grading}" editable="false" borderVisible="false" contentBackgroundAlpha.Page2="0" 
-									 text.Page2_editable="{dg.selectedItem.grading}" borderVisible.Page2_editable="true" editable.Page2_editable="true" borderVisible.Page2_AddAnother="true" editable.Page2_AddAnother="true" text.Page2_AddAnother="{dg.selectedItem.grading}" 
+									 text.Page2_editable="{dg.selectedItem.grading}" borderVisible.Page2_editable="true" editable.Page2_editable="true" 
+									 borderVisible.Page2_AddAnother="true" editable.Page2_AddAnother="true" text.Page2_AddAnother="{dg.selectedItem.grading}" 
 />
 						<s:TextInput id="bottle_size" fontSize="12" 
 									 text.Page2="{dg.selectedItem.bottle_size}" editable="false" borderVisible="false" contentBackgroundAlpha.Page2="0" 
-									 text.Page2_editable="{dg.selectedItem.bottle_size}" borderVisible.Page2_editable="true" editable.Page2_editable="true" borderVisible.Page2_AddAnother="true" editable.Page2_AddAnother="true" text.Page2_AddAnother="{dg.selectedItem.bottle_size}" 
+									 text.Page2_editable="{dg.selectedItem.bottle_size}" borderVisible.Page2_editable="true" editable.Page2_editable="true" 
+									 borderVisible.Page2_AddAnother="true" editable.Page2_AddAnother="true" text.Page2_AddAnother="{dg.selectedItem.bottle_size}" 
 />
 						<s:TextInput id="purchase_date" fontSize="12" 
 									 text.Page2="{dg.selectedItem.purchase_date}" editable="false" borderVisible="false" contentBackgroundAlpha.Page2="0" 
-									 text.Page2_editable="{dg.selectedItem.purchase_date}" borderVisible.Page2_editable="true" editable.Page2_editable="true" borderVisible.Page2_AddAnother="true" editable.Page2_AddAnother="true" text.Page2_AddAnother="{dg.selectedItem.purchase_date}" 
+									 text.Page2_editable="{dg.selectedItem.purchase_date}" borderVisible.Page2_editable="true" editable.Page2_editable="true" 
+									 borderVisible.Page2_AddAnother="true" editable.Page2_AddAnother="true" text.Page2_AddAnother="{dg.selectedItem.purchase_date}" 
 />
 						<s:TextInput id="removal_date" fontSize="12" 
 									 text.Page2="{dg.selectedItem.removal_date}" editable="false" borderVisible="false" contentBackgroundAlpha.Page2="0" 
-									 text.Page2_editable="{dg.selectedItem.removal_date}" borderVisible.Page2_editable="true" editable.Page2_editable="true" borderVisible.Page2_AddAnother="true" editable.Page2_AddAnother="true" text.Page2_AddAnother="{dg.selectedItem.removal_date}" 
+									 text.Page2_editable="{dg.selectedItem.removal_date}" borderVisible.Page2_editable="true" editable.Page2_editable="true" 
+									 borderVisible.Page2_AddAnother="true" editable.Page2_AddAnother="true" text.Page2_AddAnother="{dg.selectedItem.removal_date}" 
 />
-						<s:DropDownList id="rack" width="125" enabled.Page2="false" dataProvider="{rackList}" selectedIndex.Page2="0"></s:DropDownList>
-						<s:DropDownList id="row" width="125" enabled.Page2="false" dataProvider="{rowList}" selectedIndex.Page2="0"></s:DropDownList>
-						<s:DropDownList id="column" width="125" enabled.Page2="false" dataProvider="{colList}" selectedIndex.Page2="0"></s:DropDownList>
+						<s:TextInput includeIn="Page2" text="{dg.selectedItem.rack_name}" fontSize="12" height="13"
+									 editable="false" borderVisible="false" contentBackgroundAlpha="0"/>
+						<s:TextInput includeIn="Page2" text="{dg.selectedItem.row}" fontSize="12" height="13"
+									 editable="false" borderVisible="false" contentBackgroundAlpha="0"/>
+						<s:TextInput includeIn="Page2" text="{dg.selectedItem.col}" fontSize="12" height="13"
+									 editable="false" borderVisible="false" contentBackgroundAlpha="0"/>
+						
+						<s:DropDownList id="rack" width="125" includeIn="Page2_AddAnother,Page2_editable"
+										dataProvider="{rackList}" labelField="rack_name" selectedIndex="0"
+										close="row.enabled=true;loadRowList()"/>
+						<s:DropDownList id="row" enabled="false" includeIn="Page2_AddAnother,Page2_editable" selectedIndex="0"
+										dataProvider="{rowList}" labelField="row" width="49"
+										close="column.enabled=true;loadColList()"/>
+						<s:DropDownList id="column" enabled="false" includeIn="Page2_AddAnother,Page2_editable" selectedIndex="0"
+										dataProvider="{colList}" labelField="col" width="49"/>
 					</s:SkinnableContainer>
 					<s:SkinnableContainer skinClass="mySkins.Labels" includeIn="Page2,Page2_AddAnother,Page2_editable">
 						<s:Label text="Drink Start" fontSize="12" height="12"/>
@@ -375,6 +395,8 @@
 							  click.Page2_editable="updateWine();enable_buttons()" 
 							  click.Page2_AddAnother="AddAnotherBottle(); " visible.Page4="false"/>						
 				</s:SkinnableContainer>
+				
+				
 				<s:Group includeIn="Page3" width="695" height="27">
 					<s:Label x="104" y="8" text="An existing Wine in Database:"/>
 					<s:DropDownList id="dd_wlist" x="273" y="3" width="249" dataProvider="{wineList}" labelField="wine_name" textAlign="left" change="dd_wlist_changeHandler(event)"></s:DropDownList>
@@ -425,9 +447,11 @@
 					<s:Label x="504" y="33" text="Rack:"/>
 					<s:Label x="507" y="57" text="Row:"/>
 					<s:Label x="490" y="81" text="Column:"/>
-					<s:DropDownList x="543" y="28" width="125"></s:DropDownList>
-					<s:DropDownList x="543" y="52" width="125"></s:DropDownList>
-					<s:DropDownList x="543" y="76" width="125"></s:DropDownList>
+					<s:DropDownList id="rack_add" x="543" y="28" width="125" dataProvider="{rackList}" labelField="rack_name" selectedIndex="0"								
+									close="loadRowList(); row_add.enabled=true; col_add.enabled=false;  row_add.selectedIndex=0"/>
+					<s:DropDownList id="row_add" x="543" y="52" width="49" dataProvider="{rowList}" labelField="row"
+									close="col_add.enabled=true; loadColList();col_add.selectedIndex=0"/>
+					<s:DropDownList id="col_add" x="543" y="76" width="49" dataProvider="{colList}" labelField="col"/>
 				</s:Group>
 				<s:Group includeIn="Page3" width="693" height="22">
 					<mx:HRule x="37" y="9" width="597"/>
@@ -475,7 +499,7 @@
 					  click="fill2();dg.selectedIndex=0;currentState='Page2';" skinClass.Page2_AddAnother="components.ButtonBrowse_Pressed"/>
 			<s:Button skinClass="components.ButtonAdd" skinClass.Page3="components.ButtonAdd_Pressed"
 					  toolTip="Add another bottle to your wine collection"
-					  click="loadWineList();currentState='Page3'"/>
+					  click="loadWineList(); loadRackList(); currentState='Page3'"/>
 			<s:Button skinClass="components.ButtonAdvanced"
 					  toolTip="Advanced functionality: reconfigure your cellar, manage exports/imports... (Not implemented)"
 					  skinClass.Page4="components.ButtonAdvanced_Pressed"
@@ -532,60 +556,67 @@
 		</s:DropDownList>
 	</s:Panel>
 	<s:Panel includeIn="Page2,Page2_AddAnother,Page2_editable,Page3,Page4" width="250" height="640" x="15" y="100">
-		<mx:Accordion x="-1" y="0" height="550" width="250" includeIn="Page2,Page2_AddAnother,Page2_editable" height.Page2="607">
+		<mx:Accordion 
+			openEasingFunction="{Exponential.easeInOut}" openDuration="600"
+			x="-1" y="0" width="250" includeIn="Page2,Page2_AddAnother,Page2_editable" height="550" headerHeight="40" fontSize="16" fontWeight="bold">
 			<s:NavigatorContent label="Basic Search" width="100%" height="100%">
 				
 				<s:VGroup x="8" y="10" width="230" height="475" gap="10" horizontalAlign="center">
-					<s:Label text="Search By Age"  fontWeight.Page2="normal" fontSize.Page2="16"/>
-					<s:Button id="BasicSearch_Young" label="Young Wines" width="100"  click="searchForYoung()"/>
-					<s:Button id="BasicSearch_Prime" label="Prime Wines" width="100" click="searchForPrime()"/>
-					<s:Button id="BasicSearch_Old" label="Old Wines" width="100" click="searchForOld()"/>
-					<s:Label text="Label" text.Page2="Search By Color" fontSize.Page2="16"/>
-					<s:Button id="BasicSearch_Red" label="Red Wines" width="100" click="searchForRed()"/>
-					<s:Button id="BasicSearch_White" label="White Wines" width="100" click="searchForWhite()"/>
-					<s:Button id="BasicSearch_Rose" label="Rose Wines" width="100" click="searchForRose()"/>
+					<mx:Spacer includeIn="Page2" height="27"/>
+					<s:Label text="Search By Age"  fontWeight="normal"/>
+					<s:Button id="BasicSearch_Young" label="Young Wines" width="100"  click="searchForYoung()" fontSize="12" fontWeight="normal"/>
+					<s:Button id="BasicSearch_Prime" label="Prime Wines" width="100" click="searchForPrime()" fontSize="12" fontWeight="normal"/>
+					<s:Button id="BasicSearch_Old" label="Old Wines" width="100" click="searchForOld()" fontSize="12" fontWeight="normal"/>
+					<mx:Spacer includeIn="Page2" height="9"/>
+					<mx:HRule includeIn="Page2"/>
+					<mx:Spacer includeIn="Page2" height="9"/>
+					
+					<s:Label text="Search By Color"  fontWeight="normal"/>
+					<s:Button id="BasicSearch_Red" label="Red Wines" width="100" click="searchForRed()" fontSize="12" fontWeight="normal"/>
+					<s:Button id="BasicSearch_White" label="White Wines" width="100" click="searchForWhite()" fontSize="12" fontWeight="normal"/>
+					<s:Button id="BasicSearch_Rose" label="Rose Wines" width="100" click="searchForRose()" fontSize="12" fontWeight="normal"/>
 					
 				</s:VGroup>
 			</s:NavigatorContent>
 			<s:NavigatorContent label="Advanced Search" width="100%" height="100%">
-				<s:DropDownList width="228" id="AdvSearch_ColorChoice" prompt="Pick a Color"  x="10" y="14">
+				<s:DropDownList width="228" id="AdvSearch_ColorChoice" prompt="Pick a Color"  x="10" y="14" fontWeight="normal" fontSize="12">
 					<s:dataProvider>
 						<s:ArrayList source="[Red, Rose, White]" />
 					</s:dataProvider>
 				</s:DropDownList>
-				<s:DropDownList x="10" y="39" width="228" id="AdvSearch_TypeList" prompt="Pick a Type of Wine"></s:DropDownList>
-				<s:Label  text="Search" x="10" y="150"/>
-				<s:DropDownList  prompt="This Category" width="183" id="AdvSearch_cat1" x="55" y="143"></s:DropDownList>
-				<s:Label  text="For"  x="10" y="178"/>
+				<s:DropDownList x="10" y="39" width="228" id="AdvSearch_TypeList" prompt="Pick a Type of Wine" fontWeight="normal" fontSize="12"></s:DropDownList>
+				<s:Label  text="Search" x="10" y="150" fontWeight="normal" fontSize="12"/>
+				<s:DropDownList  prompt="This Category" width="183" id="AdvSearch_cat1" x="55" y="143" fontWeight="normal" fontSize="12"></s:DropDownList>
+				<s:Label  text="For"  x="10" y="178" fontWeight="normal" fontSize="12"/>
 				<s:ComboBox id="AdvSearch_arg1" width="207" x="31" y="172"/>
-				<s:Label text="Search" x="9" y="220"/>
-				<s:DropDownList width="181" id="AdvSearch_cat2" prompt="This Category" x="57" y="212"></s:DropDownList>
-				<s:Label text="For" x="10" y="248"/>
-				<s:Label  text="For" x="10" y="248"/>
-				<s:ComboBox width="199" id="advSearch_arg2" width.Page2="205" x.Page2="33" x="39" y="241"/>
-				<s:Label  text="Search" x="10" y="281"/>
-				<s:DropDownList id="advSearch_cat3" prompt="This Category" x="58" y="274" ></s:DropDownList>
-				<s:Label text="For" x="9" y="306" />
+				<s:Label text="Search" x="9" y="220" fontWeight="normal" fontSize="12"/>
+				<s:DropDownList width="181" id="AdvSearch_cat2" prompt="This Category" x="57" y="212" fontWeight="normal" fontSize="12"></s:DropDownList>
+				<s:Label  text="For" x="10" y="248" fontWeight="normal" fontSize="12"/>
+				<s:ComboBox id="advSearch_arg2" width="207" x="38" y="241"/>
+				<s:Label  text="Search" x="10" y="281" fontWeight="normal" fontSize="12"/>
+				<s:DropDownList id="advSearch_cat3" prompt="This Category" x="58" y="274"  fontWeight="normal" fontSize="12"></s:DropDownList>
+				<s:Label text="For" x="9" y="306"  fontWeight="normal" fontSize="12"/>
 				<s:ComboBox width="201" id="advSearch_arg3" x="38" y="302"/>
-				<s:Button label="Update" x="168" y="339"/>
-				<s:CheckBox x="10" y="71" id="AdvSearch_IncludeYoung" label="Include Young Wines"/>
-				<s:CheckBox id="AdvSearch_IncludePrime" label="Include Prime Wines" x="10" y="93"/>
-				<s:CheckBox x="10" y="115" id="AdvSearch_IncludeOld" label="Include Old Wines"/>
+				<s:Button label="Update" x="168" y="339" fontWeight="normal" fontSize="12"/>
+				<s:CheckBox x="10" y="71" id="AdvSearch_IncludeYoung" label="Include Young Wines" fontWeight="normal" fontSize="12"/>
+				<s:CheckBox id="AdvSearch_IncludePrime" label="Include Prime Wines" x="10" y="93" fontWeight="normal" fontSize="12"/>
+				<s:CheckBox x="10" y="115" id="AdvSearch_IncludeOld" label="Include Old Wines" fontWeight="normal" fontSize="12"/>
 			</s:NavigatorContent>
 			
 			<s:NavigatorContent label="Match a Wine to a Meal" width="100%" height="100%">
-				<s:Label text="Select A Meal:" fontSize="16" x="10" y="9"/>
-				<s:DropDownList id="mealSelect" prompt="Select A Meal"  x="10" y="26" width="228"/>
-				<s:Button id="mealUpdate" label="Update" x="168" y="54"/>
-				<s:Label text="Add A Suggestion:"  x="10" y="108" fontSize="16"/>
-				<s:ComboBox id="mealAddMeal" x="10" y="148" width="229"/>
-				<s:ComboBox id="mealAddWine" x="9" y="198" width="228"/>
-				<s:Button x="168" y="227" label="Add" id="MealAddButton"/>
-				<s:Label x="10" y="131" text="Suggest This Wine"/>
-				<s:Label x="10" y="181" text="With This Meal"/>
+				<s:Label text="Select A Meal:" fontSize="14" fontWeight="normal" x="10" y="11"/>
+				<s:DropDownList id="mealSelect" prompt="Select A Meal"  width="228" fontSize="12" fontWeight="normal" x="10" y="28"/>
+				<s:Button id="mealUpdate" label="Update" fontSize="12" fontWeight="normal" x="168" y="56"/>
+				<s:Label text="Add A Suggestion:" fontSize="14" fontWeight="normal" x="11" y="140"/>
+				<s:ComboBox id="mealAddMeal" width="229" fontSize="12" fontWeight="normal" x="11" y="180"/>
+				<s:ComboBox id="mealAddWine" width="228" fontSize="12" fontWeight="normal" x="10" y="230"/>
+				<s:Button label="Add" id="MealAddButton" fontSize="12" fontWeight="normal" x="169" y="259"/>
+				<s:Label text="Suggest This Wine" fontSize="12" fontWeight="normal" x="11" y="163"/>
+				<s:Label text="With This Meal" fontSize="12" fontWeight="normal" x="11" y="213"/>
+				<mx:HRule x="75" y="107"/>
 			</s:NavigatorContent>
 		</mx:Accordion>
-		<s:Label x="10" y="568" text="Click above Acordian buttons to show search options" width="228" height="33" fontSize="14" includeIn="Page2_AddAnother,Page2_editable" textAlign="left"/>
+		<s:Label x="10" y="568" text="Click above Acordian buttons to show search options" width="228" height="33" fontSize="14" includeIn="Page2,Page2_AddAnother,Page2_editable" textAlign="left"/>
 	</s:Panel>
 	
 	<mx:ViewStack id="vs1" includeIn="Page1" x="444.4" y="253.5" width="400" height="487">

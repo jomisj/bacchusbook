@@ -13,6 +13,8 @@ private var dd1Data:XMLListCollection;
 [Bindable]
 private var wineList:XMLListCollection;
 [Bindable]
+private var locationList:XMLListCollection;
+[Bindable]
 
 private var rackList:XMLListCollection;
 [Bindable]
@@ -88,6 +90,36 @@ public function loadWineListHandler(event:ResultEvent):void {
 	wineList = new XMLListCollection(xmlList); 
 }
 
+public function loadEmptyLocationHandler(event:ResultEvent):void {
+	var result:XML = XML(event.result);  
+	var xmlList:XMLList = result.data.children();
+	var emptyXmlList:XMLList = new XMLList;
+	locationList = new XMLListCollection;
+	locationList = new XMLListCollection(xmlList); 
+}
+public function loadRackListHandler(event:ResultEvent):void {
+	var result:XML = XML(event.result);  
+	var xmlList:XMLList = result.data.children();
+	var emptyXmlList:XMLList = new XMLList;
+	rackList = new XMLListCollection;
+	rackList = new XMLListCollection(xmlList); 
+}
+public function loadRowListHandler(event:ResultEvent):void {
+	var result:XML = XML(event.result);  
+	var xmlList:XMLList = result.data.children();
+	var emptyXmlList:XMLList = new XMLList;
+	rowList = new XMLListCollection;
+	rowList = new XMLListCollection(xmlList); 
+}
+public function loadColListHandler(event:ResultEvent):void {
+	var result:XML = XML(event.result);  
+	var xmlList:XMLList = result.data.children();
+	var emptyXmlList:XMLList = new XMLList;
+	colList = new XMLListCollection;
+	colList = new XMLListCollection(xmlList); 
+}
+
+
 public function chartByYear():void{
 	var params:Object = new Object();
 	WineServiceChart.addEventListener(ResultEvent.RESULT,WineServiceChart_resultHandler);
@@ -120,6 +152,81 @@ public function loadWineList():void{
 	wineService.addEventListener(ResultEvent.RESULT,loadWineListHandler);
 	wineService.method = "GET";
 	params['method'] = "loadWineList";
+	wineService.cancel();
+	wineService.send(params);
+}
+
+public function loadLocationList():void{
+	var params:Object = new Object();
+	wineService.removeEventListener(ResultEvent.RESULT,insertItemHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,updateItemHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,removeItemHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,addAnotherItemHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,resultHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,WineServiceChart_resultHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,loadWineListHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,loadRackListHandler);
+	wineService.addEventListener(ResultEvent.RESULT,loadEmptyLocationHandler);
+	wineService.method = "GET";
+	params['method'] = "loadLocationList";
+	wineService.cancel();
+	wineService.send(params);
+}
+
+public function loadRackList():void{
+	var params:Object = new Object();
+	wineService.removeEventListener(ResultEvent.RESULT,insertItemHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,updateItemHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,removeItemHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,WineServiceChart_resultHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,addAnotherItemHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,resultHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,loadWineListHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,loadEmptyLocationHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,loadColListHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,loadRowListHandler);
+	wineService.addEventListener(ResultEvent.RESULT,loadRackListHandler);
+	wineService.method = "GET";
+	params['method'] = "loadRackList";
+	wineService.cancel();
+	wineService.send(params);
+}
+public function loadRowList():void{
+	var params:Object = new Object();
+	wineService.removeEventListener(ResultEvent.RESULT,insertItemHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,updateItemHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,removeItemHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,addAnotherItemHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,WineServiceChart_resultHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,resultHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,loadWineListHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,loadEmptyLocationHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,loadColListHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,loadRackListHandler);
+	wineService.addEventListener(ResultEvent.RESULT,loadRowListHandler);
+	wineService.method = "GET";
+	params['method'] = "loadRowList";
+	params['rack'] = parseInt(rack.selectedItem.rackID);
+	wineService.cancel();
+	wineService.send(params);
+}
+public function loadColList():void{
+	var params:Object = new Object();
+	wineService.removeEventListener(ResultEvent.RESULT,insertItemHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,updateItemHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,removeItemHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,addAnotherItemHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,resultHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,loadWineListHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,loadEmptyLocationHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,WineServiceChart_resultHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,loadRowListHandler);
+	wineService.removeEventListener(ResultEvent.RESULT,loadRackListHandler);
+	wineService.addEventListener(ResultEvent.RESULT,loadColListHandler);
+	wineService.method = "GET";
+	params['method'] = "loadColList";
+	params['rack'] = parseInt(rack.selectedItem.rackID);
+	params['row'] = parseInt(row.selectedItem.row);
 	wineService.cancel();
 	wineService.send(params);
 }

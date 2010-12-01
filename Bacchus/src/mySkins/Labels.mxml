@@ -22,7 +22,7 @@
 							  horizontalAlign="right" 
 							  variableRowHeight="false" 
 							  rowHeight="20"
-							  paddingTop="4"
+							  paddingTop="1"
 							  verticalAlign="middle"/>
 		</s:layout>
 	</s:Group>    
